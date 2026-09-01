@@ -5,6 +5,7 @@ services:
   traefik:
     image: traefik:v3.1
     container_name: grandprix-traefik
+    user: "0:0"
     restart: unless-stopped
     ports:
       - "80:80"
@@ -15,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_letsencrypt:/letsencrypt
     command:
-      - "--log.level=INFO"
+      - "--log.level=DEBUG"
       # API & Dashboard
       - "--api.insecure=false"
       - "--api.dashboard=false"
