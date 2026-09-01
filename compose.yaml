@@ -15,7 +15,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_letsencrypt:/letsencrypt
     command:
-      # API & Dashboard (Desactivado según requerimiento)
+      - "--log.level=INFO"
+      # API & Dashboard
       - "--api.insecure=false"
       - "--api.dashboard=false"
       # Proveedor Docker
@@ -24,11 +25,7 @@ services:
       - "--providers.docker.network=grandprix_net"
       # EntryPoints (HTTP & HTTPS)
       - "--entryPoints.web.address=:80"
-      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entryPoints.web.http.redirections.entryPoint.permanent=true"
       - "--entryPoints.websecure.address=:443"
-      - "--entryPoints.websecure.http.tls.certResolver=letsencrypt"
       # Certificados SSL con Let's Encrypt
       - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-webmaster@catatumbostudios.com}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
@@ -37,12 +34,6 @@ services:
       # Soporte para Cloudflare (IPs Confiables para CF-Connecting-IP)
       - "--entrypoints.web.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32,127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
       - "--entrypoints.websecure.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32,127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
-      # Compresión global
-      - "--entrypoints.websecure.http.middlewares=compress@docker"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.middlewares.compress.compress=true"
-      - "traefik.docker.network=grandprix_net"
     deploy:
       resources:
         limits:
@@ -101,10 +92,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
-      - "traefik.http.routers.grandprix-web.rule=Host(`${DOMAIN:-grandprixvzla.com}`) || Host(`${WWW_DOMAIN:-www.grandprixvzla.com}`)"
-      - "traefik.http.routers.grandprix-web.entrypoints=websecure"
-      - "traefik.http.routers.grandprix-web.tls.certresolver=letsencrypt"
-      - "traefik.http.services.grandprix-web.loadbalancer.server.port=80"
+      # Router HTTPS (443)
+      - "traefik.http.routers.web-sec.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`)"
+      - "traefik.http.routers.web-sec.entrypoints=websecure"
+      - "traefik.http.routers.web-sec.tls=true"
+      - "traefik.http.routers.web-sec.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.web-sec.service=web-svc"
+      # Router HTTP (80 - Compatible con Cloudflare Flexible / HTTP)
+      - "traefik.http.routers.web-http.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`)"
+      - "traefik.http.routers.web-http.entrypoints=web"
+      - "traefik.http.routers.web-http.service=web-svc"
+      # Servicio
+      - "traefik.http.services.web-svc.loadbalancer.server.port=80"
     deploy:
       resources:
         limits:
@@ -135,10 +134,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
-      - "traefik.http.routers.grandprix-pma.rule=Host(`${PMA_SUBDOMAIN:-pma.grandprixvzla.com}`)"
-      - "traefik.http.routers.grandprix-pma.entrypoints=websecure"
-      - "traefik.http.routers.grandprix-pma.tls.certresolver=letsencrypt"
-      - "traefik.http.services.grandprix-pma.loadbalancer.server.port=80"
+      # Router HTTPS (443)
+      - "traefik.http.routers.pma-sec.rule=Host(`pma.grandprixvzla.com`)"
+      - "traefik.http.routers.pma-sec.entrypoints=websecure"
+      - "traefik.http.routers.pma-sec.tls=true"
+      - "traefik.http.routers.pma-sec.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.pma-sec.service=pma-svc"
+      # Router HTTP (80)
+      - "traefik.http.routers.pma-http.rule=Host(`pma.grandprixvzla.com`)"
+      - "traefik.http.routers.pma-http.entrypoints=web"
+      - "traefik.http.routers.pma-http.service=pma-svc"
+      # Servicio
+      - "traefik.http.services.pma-svc.loadbalancer.server.port=80"
     deploy:
       resources:
         limits:
@@ -163,10 +170,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
-      - "traefik.http.routers.grandprix-panel.rule=Host(`${PANEL_SUBDOMAIN:-webmaster.grandprixvzla.com}`)"
-      - "traefik.http.routers.grandprix-panel.entrypoints=websecure"
-      - "traefik.http.routers.grandprix-panel.tls.certresolver=letsencrypt"
-      - "traefik.http.services.grandprix-panel.loadbalancer.server.port=9000"
+      # Router HTTPS (443)
+      - "traefik.http.routers.panel-sec.rule=Host(`webmaster.grandprixvzla.com`)"
+      - "traefik.http.routers.panel-sec.entrypoints=websecure"
+      - "traefik.http.routers.panel-sec.tls=true"
+      - "traefik.http.routers.panel-sec.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.panel-sec.service=panel-svc"
+      # Router HTTP (80)
+      - "traefik.http.routers.panel-http.rule=Host(`webmaster.grandprixvzla.com`)"
+      - "traefik.http.routers.panel-http.entrypoints=web"
+      - "traefik.http.routers.panel-http.service=panel-svc"
+      # Servicio
+      - "traefik.http.services.panel-svc.loadbalancer.server.port=9000"
     deploy:
       resources:
         limits:
