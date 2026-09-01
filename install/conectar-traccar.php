@@ -13,8 +13,8 @@ $message = '';
 $error = '';
 $devices = [];
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') ? 'https' : 'http';
-$rootPath = rtrim(str_replace('\\', '/', dirname(dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/grandprix/install/conectar-traccar.php')))), '/');
-$webhookUrl = $scheme . '://' . (string) ($_SERVER['HTTP_HOST'] ?? 'catatumbostudios.com') . $rootPath . '/api/traccar-webhook.php';
+$rootPath = rtrim(str_replace('\\', '/', dirname(dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/install/conectar-traccar.php')))), '/');
+$webhookUrl = $scheme . '://' . (string) ($_SERVER['HTTP_HOST'] ?? 'grandprixvzla.com') . $rootPath . '/api/traccar-webhook.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!gp_verify_csrf($_POST['csrf'] ?? null)) {
@@ -168,7 +168,7 @@ try {
 <div class="full" style="padding:14px;border:1px solid #bde9df;background:#edfbf7;border-radius:14px"><span class="eyebrow">WEBHOOK DE TRACCAR</span><p style="margin:7px 0 0;color:#42677a;font-size:12px;line-height:1.5">Traccar enviará cada posición y evento al sistema. El navegador no realizará consultas repetitivas.</p></div>
 <label class="full">URL del webhook<input value="<?=htmlspecialchars($webhookUrl)?>" readonly onclick="this.select()"><small style="display:block;color:#718399;margin-top:6px">Usa esta misma URL para <b>forward.url</b> y <b>event.forward.url</b>.</small></label>
 <label class="full">Secreto de autenticación del webhook<input value="<?=htmlspecialchars($webhookSecretDisplay)?>" readonly onclick="this.select()" placeholder="Se generará al guardar"><small style="display:block;color:#718399;margin-top:6px">Cabecera Traccar: <b>X-Grandprix-Webhook: SECRETO</b>. Nunca coloques este valor en JavaScript.</small></label>
-<label class="full">Llave pública de MapTiler<input name="maptiler_key" type="password" placeholder="Déjala vacía para conservar la llave guardada"><small style="display:block;color:#718399;margin-top:6px"><?=!empty($config['maptiler_key']) ? 'Llave MapTiler configurada y protegida contra edición accidental.' : 'Necesaria para el mapa híbrido Satélite Pro. Restríngela a https://catatumbostudios.com/* en MapTiler Cloud.'?></small></label>
+<label class="full">Llave pública de MapTiler<input name="maptiler_key" type="password" placeholder="Déjala vacía para conservar la llave guardada"><small style="display:block;color:#718399;margin-top:6px"><?=!empty($config['maptiler_key']) ? 'Llave MapTiler configurada y protegida contra edición accidental.' : 'Necesaria para el mapa híbrido Satélite Pro. Restríngela a https://grandprixvzla.com/* en MapTiler Cloud.'?></small></label>
 <label class="full">Estilo de mapa predeterminado<select name="map_style"><option value="hybrid" <?=($config['map_style'] ?? 'hybrid') === 'hybrid' ? 'selected' : ''?>>Satélite Pro · imágenes + calles</option><option value="streets-v4" <?=in_array(($config['map_style'] ?? ''), ['streets-v4','streets-v2'], true) ? 'selected' : ''?>>Street Premium · calles</option><option value="dataviz-dark" <?=in_array(($config['map_style'] ?? ''), ['dataviz-dark','streets-v2-dark'], true) ? 'selected' : ''?>>Operación nocturna</option></select></label>
 <div class="full" style="padding:14px;border:1px solid #cbdffa;background:#f3f8ff;border-radius:14px"><span class="eyebrow">CANAL PUSH PARA PANTALLAS ABIERTAS</span><p style="margin:7px 0 0;color:#42677a;font-size:12px;line-height:1.5">Pusher Channels entrega el movimiento mediante WebSocket privado. El cliente queda limitado exclusivamente a WebSocket; no usa fallback HTTP.</p></div>
 <label class="toggle full"><input type="checkbox" name="realtime_enabled" <?=!empty($config['realtime_enabled']) ? 'checked' : ''?>><span><b>Activar movimiento instantáneo por WebSocket</b>Recomendado para que el mapa y el velocímetro cambien al llegar cada webhook.</span></label>

@@ -66,7 +66,7 @@ Antes de enviar, el backend vuelve a consultar la compatibilidad para impedir qu
 ## Lista de comprobación en Hostinger
 
 1. Extraer el ZIP dentro de `public_html/grandprix`.
-2. Comprobar que `https://tudominio.com/grandprix/config/traccar.php` responda 403.
+2. Comprobar que `https://grandprixvzla.com/config/traccar.php` responda 403.
 3. Iniciar sesión y abrir `install/conectar-traccar.php`.
 4. Ejecutar la prueba de conexión y confirmar los equipos detectados.
 5. Asignar el Device ID exacto a Yeivert Sánchez.

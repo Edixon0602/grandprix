@@ -23,10 +23,10 @@ INSTALACION O ACTUALIZACION
 2. Extraiga el ZIP dentro de /public_html/grandprix.
 3. NO sustituya config/traccar.php, config/app.php ni otras credenciales privadas.
 4. Ingrese como administrador.
-5. Abra /grandprix/install/actualizar-v7-2.php.
+5. Abra /install/actualizar-v7-2.php.
 6. Indique MySQL y, si desea preparar la cuenta inicial, complete los datos de
    Yeivert Sanchez, Device ID interno de Traccar, SIM, clave GT06 y plan.
-7. Abra /grandprix/install/conectar-traccar.php y valide Traccar, webhook,
+7. Abra /install/conectar-traccar.php y valide Traccar, webhook,
    Pusher y MapTiler.
 8. Pruebe Diagnostico general, Consultar IP/APN y Solicitar ubicacion.
 9. Verifique cableado y relay en taller antes de habilitar comandos de motor.

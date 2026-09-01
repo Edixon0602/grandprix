@@ -6,11 +6,11 @@ declare(strict_types=1);
  * (por defecto el mismo día de la fecha de cobro, configurable con
  * reminder_days_before) y reintenta envíos pendientes de recibos.
  *
- * Uso CLI (recomendado en Hostinger):
- *   php /home/u843703195/domains/<dominio>/public_html/grandprix/tools/reminders-whatsapp.php
+ * Uso CLI (Docker / VPS):
+ *   docker exec -t grandprix-web php /var/www/html/tools/reminders-whatsapp.php
  *
- * Uso por HTTP (si el hosting no permite cron por CLI):
- *   https://<dominio>/grandprix/tools/reminders-whatsapp.php?token=<cron_token>
+ * Uso por HTTP:
+ *   https://grandprixvzla.com/tools/reminders-whatsapp.php?token=<cron_token>
  *
  * No requiere sesión administrativa: es un job. En modo HTTP se valida el token
  * de config/whatsapp.php.

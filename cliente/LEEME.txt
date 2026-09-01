@@ -1,6 +1,6 @@
 MI GRANDPRIX · YEIVERT SANCHEZ · V7 SATELITE PRO
 
-Ruta: /grandprix/cliente/
+Ruta: /cliente/
 
 FUNCIONES
 - Datos de la motocicleta y contrato de 50 semanas.
@@ -16,6 +16,6 @@ FUNCIONES
 
 ASIGNACION
 Introduzca el ID numerico interno de Traccar en
-/grandprix/install/conectar-traccar.php. El navegador no puede elegir ni
+/install/conectar-traccar.php. El navegador no puede elegir ni
 modificar el dispositivo asignado.
 
