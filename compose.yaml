@@ -146,30 +146,29 @@ services:
       - grandprix_net
 
   # ============================================================================
-  # 5. Panel de Control Open Source (1Panel - Alternativa a cPanel/Plesk)
+  # 5. Panel de Control Open Source (Portainer CE - Gestión Gráfica de Servidor)
   # ============================================================================
   panel:
-    image: okey5678/1panel:latest
+    image: portainer/portainer-ce:latest
     container_name: grandprix-panel
     restart: unless-stopped
-    environment:
-      TZ: ${TZ:-America/Caracas}
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
-      - grandprix_1panel_data:/opt
+      - grandprix_panel_data:/data
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grandprix-panel.rule=Host(`${PANEL_SUBDOMAIN}`)"
       - "traefik.http.routers.grandprix-panel.entrypoints=websecure"
       - "traefik.http.routers.grandprix-panel.tls.certresolver=letsencrypt"
-      - "traefik.http.services.grandprix-panel.loadbalancer.server.port=9999"
+      - "traefik.http.services.grandprix-panel.loadbalancer.server.port=9000"
     deploy:
       resources:
         limits:
-          memory: 384M
+          memory: 256M
         reservations:
-          memory: 128M
+          memory: 64M
     networks:
       - grandprix_net
 
@@ -183,5 +182,5 @@ volumes:
     name: grandprix_dbdata
   traefik_letsencrypt:
     name: traefik_letsencrypt
-  grandprix_1panel_data:
-    name: grandprix_1panel_data
+  grandprix_panel_data:
+    name: grandprix_panel_data
