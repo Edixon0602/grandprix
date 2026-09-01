@@ -156,17 +156,17 @@ services:
       - grandprix_net
 
   # ============================================================================
-  # 5. Panel de Control Open Source (Portainer CE - Gestión Gráfica de Servidor)
+  # 5. Administrador de Archivos Web (FileBrowser - Estilo cPanel File Manager)
   # ============================================================================
   panel:
-    image: portainer/portainer-ce:latest
+    image: filebrowser/filebrowser:latest
     container_name: grandprix-panel
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - grandprix_panel_data:/data
+      - .:/srv
+      - grandprix_filebrowser_data:/database
+    environment:
+      - TZ=${TZ:-America/Caracas}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
@@ -180,14 +180,14 @@ services:
       - "traefik.http.routers.panel-http.rule=Host(`webmaster.grandprixvzla.com`)"
       - "traefik.http.routers.panel-http.entrypoints=web"
       - "traefik.http.routers.panel-http.service=panel-svc"
-      # Servicio
-      - "traefik.http.services.panel-svc.loadbalancer.server.port=9000"
+      # Servicio (FileBrowser escucha en el puerto 80)
+      - "traefik.http.services.panel-svc.loadbalancer.server.port=80"
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 128M
         reservations:
-          memory: 64M
+          memory: 32M
     networks:
       - grandprix_net
 
@@ -201,5 +201,5 @@ volumes:
     name: grandprix_dbdata
   traefik_letsencrypt:
     name: traefik_letsencrypt
-  grandprix_panel_data:
-    name: grandprix_panel_data
+  grandprix_filebrowser_data:
+    name: grandprix_filebrowser_data
