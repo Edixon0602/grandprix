@@ -1,0 +1,15 @@
+GRANDPRIX V6 · ACTUALIZACIÓN GPS DE PRODUCCIÓN
+
+1. Haz respaldo de public_html/grandprix.
+2. Sube el ZIP de actualización dentro de esa carpeta.
+3. Extrae y acepta reemplazar.
+4. La actualización conserva config/app.php y config/install.lock.
+5. La actualización reemplaza config/traccar.php porque contiene la conexión de producción solicitada.
+6. Inicia sesión, abre install/conectar-traccar.php y ejecuta la prueba.
+7. Define el Device ID exacto de Yeivert Sánchez.
+8. Pulsa Ctrl + F5 o reinicia la PWA móvil.
+
+TOKEN: incluido del lado del servidor; vencimiento registrado 31/08/2026 04:00 UTC.
+MAPA: posiciones exclusivamente reales.
+COMANDOS: consultados dinámicamente por GPS y canal.
+

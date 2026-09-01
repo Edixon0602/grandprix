@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="GRANDPRIX Inversiones">
+  <defs><linearGradient id="b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8593A3"/><stop offset="1" stop-color="#0E4D91"/></linearGradient></defs>
+  <g transform="translate(12 12)">
+    <path d="M8 82h16V58H8zM31 82h18V42H31zM57 82h20V24H57z" fill="url(#b)"/>
+    <path d="M11 51C35 43 57 26 82 7" fill="none" stroke="#0D4D8F" stroke-width="5" stroke-linecap="round"/>
+    <path d="M74 5l14-1-4 14" fill="none" stroke="#0D4D8F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="105" y="62" fill="#114A83" font-family="Arial,Helvetica,sans-serif" font-size="48" font-style="italic" font-weight="900" letter-spacing="-1">GRANDPRIX</text>
+  <text x="292" y="92" fill="#566273" font-family="Arial,Helvetica,sans-serif" font-size="22" font-style="italic" letter-spacing="7">INVERSIONES</text>
+</svg>

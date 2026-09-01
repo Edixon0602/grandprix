@@ -1,0 +1,20 @@
+/* Mi GRANDPRIX V29 · ajustes responsive complementarios */
+@media(max-width:720px){
+  html,body{max-width:100%;overflow-x:hidden}
+  main,#view,.page{min-width:0;max-width:100%}
+  .page{padding-top:10px}
+  header{gap:7px}.head-right{gap:6px}.head-right .avatar{flex:0 0 34px}
+  .grid,.form-layout,.support-grid{width:100%;max-width:100%;padding-left:9px!important;padding-right:9px!important}
+  .card{max-width:100%;overflow:hidden}
+  .card-head{gap:10px;align-items:flex-start}.card-head>div{min-width:0}.card-head h2{font-size:12px}.card-head p{line-height:1.4}
+  .motor-hero img{width:100%;max-width:320px;margin:auto}.motor-meta{grid-template-columns:1fr 1fr!important}.motor-meta span:last-child:nth-child(odd){grid-column:1/-1}
+  .finance{padding:16px!important}.finance-top{gap:10px}.finance strong{font-size:27px!important}.week-summary{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .weeks{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}.week{min-width:0;min-height:82px;padding:7px 3px!important}.week b{font-size:9px}.week small,.week em,.week time{font-size:6.5px;overflow-wrap:anywhere}.week time{display:block;margin-top:4px}
+  .payments{padding:7px 11px!important}.payrow{grid-template-columns:34px minmax(0,1fr) auto!important;gap:8px!important}.payrow>time{display:block!important;grid-column:2/-1;font-size:7px;color:#778b9d}.payrow .proof{grid-column:3;grid-row:1/3;align-self:center}
+  .form{padding:13px!important}.form-grid{gap:9px!important}.form input,.form select,.form textarea{font-size:16px!important;min-height:46px}.review-note{font-size:9px!important;line-height:1.5}.upload{padding:16px 10px!important}.primary{min-height:46px;font-size:10px!important}
+  .dossier-grid{padding-left:0!important;padding-right:0!important}.dossier-files article{min-width:0}.dossier-doc-copy{min-width:0}.dossier-doc-copy b,.dossier-doc-copy em{overflow-wrap:anywhere}
+}
+@media(max-width:420px){
+  .weeks{grid-template-columns:repeat(3,minmax(0,1fr))!important}.stats{padding-left:8px!important;padding-right:8px!important}.stat{min-width:138px!important}.motor-meta{grid-template-columns:1fr!important}.motor-meta span:last-child:nth-child(odd){grid-column:auto}.week-summary{grid-template-columns:1fr 1fr}.week-summary span:last-child{grid-column:1/-1}.finance-top{align-items:flex-start}.finance-top .tag{white-space:nowrap}
+  .payrow{grid-template-columns:32px minmax(0,1fr)!important}.payrow .status{grid-column:2;justify-self:start}.payrow .proof{grid-column:1;grid-row:2/4}.payrow>time{grid-column:2}
+}

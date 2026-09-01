@@ -1,0 +1,51 @@
+GRANDPRIX CONTROL 360 V7.2
+INSTALACION, COMANDOS GT06 Y PORTAL DE CLIENTES
+
+QUE INCLUYE
+- Centro avanzado con 25 comandos permitidos del manual GT06.
+- Seleccion automatica entre comandos nativos de Traccar y canal SMS.
+- Corte protegido solo con relay verificado, moto detenida y telemetria <30 s.
+- Auditoria de comandos, reautenticacion y confirmacion critica.
+- Portal Mi GRANDPRIX: una moto por cliente, GPS solo lectura y plan de 50 semanas.
+- Reporte de pagos con banco, referencia, monto, fecha y comprobante.
+- Bandeja administrativa para conciliar, aprobar o rechazar pagos.
+- Mapa MapTiler + MapLibre y movimiento por webhook/WebSocket, sin polling.
+
+REQUISITOS
+- PHP 8.1 o superior con PDO MySQL, cURL, JSON, mbstring y sodium u OpenSSL.
+- Base de datos MySQL y HTTPS valido.
+- Salida HTTPS a Traccar, MapTiler y Pusher; WebSocket wss habilitado.
+- Pasarela SMS configurada en Traccar para las ordenes que no sean nativas.
+- SIM del GPS con servicio/saldo y campo Phone configurado en Traccar.
+
+INSTALACION O ACTUALIZACION
+1. Realice respaldo completo de /public_html/grandprix y de MySQL.
+2. Extraiga el ZIP dentro de /public_html/grandprix.
+3. NO sustituya config/traccar.php, config/app.php ni otras credenciales privadas.
+4. Ingrese como administrador.
+5. Abra /grandprix/install/actualizar-v7-2.php.
+6. Indique MySQL y, si desea preparar la cuenta inicial, complete los datos de
+   Yeivert Sanchez, Device ID interno de Traccar, SIM, clave GT06 y plan.
+7. Abra /grandprix/install/conectar-traccar.php y valide Traccar, webhook,
+   Pusher y MapTiler.
+8. Pruebe Diagnostico general, Consultar IP/APN y Solicitar ubicacion.
+9. Verifique cableado y relay en taller antes de habilitar comandos de motor.
+10. Bloquee o retire la carpeta install al finalizar.
+
+DEVICE ID CORRECTO
+- Use el campo id numerico interno devuelto por Traccar, por ejemplo 7.
+- No use 0.
+- No use el IMEI/uniqueId en el campo Device ID.
+
+SEGURIDAD
+- El token de Traccar, App Secret de Pusher y clave GT06 permanecen en PHP.
+- La clave GT06 se guarda cifrada y no se muestra en el navegador.
+- El cliente no dispone de endpoint, boton ni permiso para enviar comandos.
+- La sesion del cliente recibe exclusivamente el GPS asignado en MySQL.
+- La clave MapTiler es publica por diseño y debe restringirse al dominio.
+- Rote cualquier credencial que haya sido compartida por mensajeria.
+
+IMPORTANTE
+Que Traccar acepte una orden significa que la recibio, no que el hardware la
+ejecuto. Valide firmware, formato, cobertura, saldo de SIM y cableado. Consulte
+el Manual-GRANDPRIX-V7.2.pdf para ejemplos visuales y procedimiento completo.

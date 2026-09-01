@@ -1,0 +1,12 @@
+GRANDPRIX Control 360
+Version: 7.2.0 · Comandos GT06 + portal financiero individual
+Fecha: 2026-08-11
+Motor cartografico: MapLibre GL JS 5.24.0
+Proveedor cartografico: MapTiler Cloud (Hybrid / Streets v4 / Dataviz Dark)
+Telemetria continua: Traccar → webhook autenticado → WebSocket privado
+Arranque seguro: una sincronizacion REST unica sólo si el snapshot nunca fue creado
+Control de concurrencia: bloqueo no bloqueante para evitar cargas duplicadas
+Actualizacion automatica GPS: por eventos; sin setInterval, long-polling ni REST repetitivo
+Comandos: catalogo permitido del manual GT06, canales datos/SMS, reautenticacion y auditoria
+Portal cliente: una moto asignada, GPS solo lectura, plan de 50 semanas y reporte de pagos
+Datos simulados: ninguno

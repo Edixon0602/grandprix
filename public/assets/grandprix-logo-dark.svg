@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 82" role="img" aria-label="GRANDPRIX Financiamiento de motos">
+  <defs>
+    <linearGradient id="gpBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0C58D8"/>
+      <stop offset=".55" stop-color="#1F7CFF"/>
+      <stop offset="1" stop-color="#5AA7FF"/>
+    </linearGradient>
+    <linearGradient id="gpSilver" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D7E6F5"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#071D35" flood-opacity=".15"/></filter>
+  </defs>
+  <g transform="translate(4 7)" filter="url(#soft)">
+    <path fill="#0A2A50" d="M16 4h53c7 0 12 6 10 13l-3 10H43l-3 10h25l-3 11H36c-12 0-19-11-16-22l3-10C26 8 33 4 42 4H16z"/>
+    <path fill="url(#gpBlue)" d="M55 4h35l-7 24H68l-4 14h-15L55 4z"/>
+    <path fill="url(#gpBlue)" d="M77 31h15l-7 24H70l7-24z"/>
+    <path fill="#F28A23" d="M20 50h9l-3 10h-9z" transform="skewX(-12)"/>
+  </g>
+  <text x="111" y="39" fill="#0A2342" font-family="Arial,Helvetica,sans-serif" font-size="29" font-weight="900" letter-spacing="1.2">GRANDPRIX</text>
+  <text x="113" y="59" fill="#58718D" font-family="Arial,Helvetica,sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">FINANCIAMIENTO DE MOTOS</text>
+</svg>

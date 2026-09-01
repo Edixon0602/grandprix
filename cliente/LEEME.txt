@@ -1,0 +1,21 @@
+MI GRANDPRIX · YEIVERT SANCHEZ · V7 SATELITE PRO
+
+Ruta: /grandprix/cliente/
+
+FUNCIONES
+- Datos de la motocicleta y contrato de 50 semanas.
+- Semanas pagadas, semana actual y pendientes.
+- Reporte de pago con banco, referencia, fecha, monto y comprobante.
+- Pagos, recibos, contrato y soporte.
+- GPS real exclusivo de la motocicleta asignada en el servidor.
+- Satelite Pro / Street Premium / modo nocturno con MapTiler + MapLibre.
+- Movimiento del marcador y rastro solamente al recibir nuevas posiciones.
+- Velocidad actual, maxima y promedio de la sesion con lecturas Traccar.
+- Ignicion, rumbo, bateria, RSSI, satelites, odometro, altitud, precision y
+  ultima comunicacion cuando el equipo reporte cada atributo.
+
+ASIGNACION
+Introduzca el ID numerico interno de Traccar en
+/grandprix/install/conectar-traccar.php. El navegador no puede elegir ni
+modificar el dispositivo asignado.
+

@@ -1,0 +1,61 @@
+# ==============================================================================
+# .gitignore - GRANDPRIX
+# ==============================================================================
+
+# Entorno y Secretos
+.env
+.env.local
+.env.*.local
+
+# Archivos de respaldo y temporales
+*.bak
+*.bak-*
+*.backup
+*.old
+*.tmp
+*.swp
+*~
+
+# Logs y Locks de ejecución
+*.log
+error_log
+config/runtime/*
+!config/runtime/.gitkeep
+!config/runtime/.htaccess
+
+# Datos y Documentos de Clientes (Privacidad y Almacenamiento)
+config/customer-documents/*
+!config/customer-documents/.gitkeep
+!config/customer-documents/.htaccess
+
+config/payment-proofs/*
+!config/payment-proofs/.gitkeep
+!config/payment-proofs/.htaccess
+
+config/client-dossiers/*
+!config/client-dossiers/.gitkeep
+!config/client-dossiers/.htaccess
+!config/client-dossiers/index.html
+
+config/application-files/*
+!config/application-files/.gitkeep
+!config/application-files/.htaccess
+
+config/clientes/*
+!config/clientes/.gitkeep
+!config/clientes/.htaccess
+!config/clientes/index.html
+
+# Certificados SSL locales
+*.pem
+*.key
+*.crt
+traefik/acme.json
+
+# Sistema Operativo y Editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

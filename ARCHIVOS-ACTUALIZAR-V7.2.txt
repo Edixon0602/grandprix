@@ -1,0 +1,35 @@
+GRANDPRIX V7.2 - ARCHIVOS PARA ACTUALIZAR
+
+Este paquete no contiene credenciales reales ni archivos privados generados:
+- config/traccar.php
+- config/database.php
+- config/app.php
+- config/command.key
+- config/install.lock
+- config/runtime/*
+- comprobantes de pago
+
+Al descomprimir sobre una instalacion existente, conserve esos archivos.
+
+NUEVO EN V7.2
+- lib/Database.php
+- lib/DatabaseSchema.php
+- lib/SecretBox.php
+- lib/Gt06CommandCatalog.php
+- lib/CommandService.php
+- lib/CustomerPortal.php
+- api/commands.php
+- api/customer.php
+- api/customer-admin.php
+- api/traccar-webhook.php actualizado
+- api/realtime-auth.php actualizado
+- assets/v72-admin.js y assets/v72-admin.css
+- carpeta cliente actualizada
+- install/actualizar-v7-2.php
+
+Despues de copiar:
+1. Abra /install/actualizar-v7-2.php como administrador.
+2. Configure la base MySQL y la asignacion inicial.
+3. Valide Traccar, SMS, webhook, Pusher y MapTiler.
+4. Limpie cache y service worker del navegador.
+5. Ejecute la secuencia de prueba descrita en el manual PDF.
