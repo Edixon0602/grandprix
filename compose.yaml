@@ -127,8 +127,6 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      PMA_USER: ${DB_USER:-u843703195_grandprix}
-      PMA_PASSWORD: ${DB_PASSWORD:-Victormanuel44}
       UPLOAD_LIMIT: 64M
       MAX_EXECUTION_TIME: 300
       MEMORY_LIMIT: 256M
