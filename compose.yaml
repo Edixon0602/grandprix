@@ -167,6 +167,11 @@ services:
       - grandprix_filebrowser_data:/database
     environment:
       - TZ=${TZ:-America/Caracas}
+    command:
+      - "-d"
+      - "/database/filebrowser.db"
+      - "--root"
+      - "/srv"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
