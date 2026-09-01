@@ -8,17 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install -j"$(nproc)" pdo_mysql mbstring curl opcache \
     && a2enmod headers rewrite deflate expires
 
-# Configuración personalizada de Apache
+# Configuración de VirtualHosts de Apache (dominio raíz -> /public, dashboard -> /)
+COPY docker/php/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Configuración de seguridad de Apache
 RUN { \
-    echo '<Directory /var/www/html>'; \
-    echo '  Options -Indexes +FollowSymLinks'; \
-    echo '  AllowOverride All'; \
-    echo '  Require all granted'; \
-    echo '</Directory>'; \
     echo 'ServerTokens Prod'; \
     echo 'ServerSignature Off'; \
-} > /etc/apache2/conf-available/grandprix.conf \
-    && a2enconf grandprix
+} > /etc/apache2/conf-available/grandprix-security.conf \
+    && a2enconf grandprix-security
 
 # Copiar configuraciones de PHP y OPcache
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini

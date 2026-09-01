@@ -95,13 +95,13 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=grandprix_net"
       # Router HTTPS (443)
-      - "traefik.http.routers.web-sec.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`)"
+      - "traefik.http.routers.web-sec.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`) || Host(`dashboard.grandprixvzla.com`)"
       - "traefik.http.routers.web-sec.entrypoints=websecure"
       - "traefik.http.routers.web-sec.tls=true"
       - "traefik.http.routers.web-sec.tls.certresolver=letsencrypt"
       - "traefik.http.routers.web-sec.service=web-svc"
       # Router HTTP (80 - Compatible con Cloudflare Flexible / HTTP)
-      - "traefik.http.routers.web-http.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`)"
+      - "traefik.http.routers.web-http.rule=Host(`grandprixvzla.com`) || Host(`www.grandprixvzla.com`) || Host(`dashboard.grandprixvzla.com`)"
       - "traefik.http.routers.web-http.entrypoints=web"
       - "traefik.http.routers.web-http.service=web-svc"
       # Servicio
