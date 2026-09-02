@@ -1,5 +1,6 @@
 import sys
 import os
+import shutil
 import json
 
 def patch_backend():
@@ -70,7 +71,13 @@ def patch_backend():
 
 def patch_frontend():
     # 1. Copiar Chmod.vue
-    os.system("cp /patch/Chmod.vue frontend/src/components/prompts/Chmod.vue")
+    dest_chmod = "frontend/src/components/prompts/Chmod.vue"
+    src_chmod = "/patch/Chmod.vue"
+    if os.path.exists(src_chmod):
+        shutil.copyfile(src_chmod, dest_chmod)
+    elif os.path.exists("Chmod.vue"):
+        shutil.copyfile("Chmod.vue", dest_chmod)
+    print("Chmod.vue copiado.")
 
     # 2. Prompts.vue
     prompts_path = "frontend/src/components/prompts/Prompts.vue"
@@ -87,13 +94,18 @@ def patch_frontend():
     listing_path = "frontend/src/views/files/FileListing.vue"
     with open(listing_path, "r", encoding="utf-8") as f:
         listing = f.read()
-    target_action = '<action icon="info" :label="t(\'buttons.info\')" show="info" />'
-    chmod_action = '<action v-if="user.perm.modify" icon="lock" :label="t(\'buttons.permissions\')" show="chmod" />\n          <action icon="info" :label="t(\'buttons.info\')" show="info" />'
-    if target_action in listing and 'show="chmod"' not in listing:
-        listing = listing.replace(target_action, chmod_action)
+
+    # Buscamos la seccion del context menu especifica
+    ctx_target = '<action icon="info" :label="t(\'buttons.info\')" show="info" />\n        </context-menu>'
+    ctx_replacement = '<action\n            v-if="headerButtons.rename"\n            icon="lock"\n            :label="t(\'buttons.permissions\')"\n            show="chmod"\n          />\n          <action icon="info" :label="t(\'buttons.info\')" show="info" />\n        </context-menu>'
+
+    if ctx_target in listing and 'show="chmod"' not in listing:
+        listing = listing.replace(ctx_target, ctx_replacement, 1)
         with open(listing_path, "w", encoding="utf-8") as f:
             f.write(listing)
-        print("FileListing.vue parchado con menú contextual.")
+        print("FileListing.vue parchado en ContextMenu con v-if='headerButtons.rename'.")
+    else:
+        print("WARN: No se pudo parchar ContextMenu en FileListing.vue o ya estaba presente.")
 
     # 4. api/files.ts
     files_api_path = "frontend/src/api/files.ts"

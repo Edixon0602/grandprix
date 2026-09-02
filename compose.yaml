@@ -162,6 +162,7 @@ services:
     build:
       context: ./docker/filebrowser
       dockerfile: Dockerfile
+    image: grandprix-panel:custom
     container_name: grandprix-panel
     restart: unless-stopped
     volumes:
