@@ -25,8 +25,10 @@ RUN pnpm install --frozen-lockfile || pnpm install
 RUN pnpm run build
 
 # --- Etapa 2: Compilación de Backend Go ---
-FROM golang:1.22-alpine AS backend-builder
+FROM golang:alpine AS backend-builder
 WORKDIR /app
+
+ENV GOTOOLCHAIN=auto
 
 RUN apk add --no-cache git
 
