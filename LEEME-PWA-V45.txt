@@ -1,0 +1,14 @@
+GRANDPRIX PWA V45 — INSTALACION MOVIL CORREGIDA
+
+- GRANDPRIX 360: app administrativa.
+- GRANDPRIX CLIENTE: app de clientes.
+- El aviso se muestra SOLO en móvil y SOLO cuando no se ha confirmado la instalación de V45.
+- El aviso de instalación está incrustado directamente en index/login/monitor; no depende de un JS/CSS externo.
+- En Android, si Chrome entrega beforeinstallprompt, el botón abre el prompt nativo.
+- En iPhone muestra Compartir > Añadir a pantalla de inicio.
+- Nuevas claves V45 evitan que una marca antigua de V43/V44 oculte el aviso.
+- Manifest IDs: / para GRANDPRIX 360 y /cliente/ para GRANDPRIX CLIENTE.
+- Los Service Workers solo interceptan navegación para fallback offline; no cachean la app dinámica, APIs, GPS ni mapas.
+
+INSTALACION: extraer en la raíz del dashboard y reemplazar. No usar /install/.
+Tras subir, cerrar las pestañas del dominio en el teléfono y abrir de nuevo.

@@ -1,0 +1,22 @@
+GRANDPRIX PWA V47 - CORRECCION DEFINITIVA DE INSTALABILIDAD
+
+Cambios clave:
+- Manifest servido dinámicamente desde index.php (sin depender de permisos de manifest.json).
+- Iconos 192x192 y 512x512 reales, requisito de Chrome, servidos dinámicamente.
+- Service Worker servido dinámicamente desde index.php con fetch handler y scope correcto.
+- GRANDPRIX 360 y GRANDPRIX CLIENTE son PWAs independientes.
+- El banner SOLO aparece cuando Chrome dispara beforeinstallprompt.
+- Al tocar Instalar se llama directamente al prompt nativo de Chrome; no hay "Ver cómo" ni fallback manual en Android.
+- El logo del banner es SVG inline, por lo que no puede romperse por ruta/permisos.
+- Se agregó PWA también al portal cliente real (no solo a su login/error).
+
+IMPORTANTE: Chrome no permite que una web instale silenciosamente una PWA ni que el sitio fuerce beforeinstallprompt. El usuario siempre debe confirmar el diálogo nativo. Chrome además aplica heurísticas de interacción (toque/clic y tiempo de uso) antes de entregar el evento.
+
+Archivos a reemplazar:
+index.php
+login.php
+monitor.php
+cliente/index.php
+cliente/login.php
+
+No requiere /install/.

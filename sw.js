@@ -1,11 +1,47 @@
-const CACHE='grandprix-control-360-v7-2-0';
-const CORE=['assets/app.css?v=7.2.0','assets/premium.css?v=7.2.0','assets/satellite-pro.css?v=7.2.0','assets/v72-admin.css?v=7.2.0','assets/vendor/maplibre-gl.css?v=5.24.0','assets/vendor/maplibre-gl.js?v=5.24.0','assets/vendor/pusher.min.js?v=8.6.0','assets/app.js?v=7.2.0','assets/realtime.js?v=7.2.0','assets/satellite-pro.js?v=7.2.0','assets/v72-admin.js?v=7.2.0','assets/grandprix-logo.png','assets/moto-blue.png','assets/moto-red.png','assets/moto-black.png','manifest.json'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).catch(()=>{})));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
-  const url=new URL(e.request.url);
-  const isStatic=url.origin===self.location.origin&&(url.pathname.includes('/assets/')||url.pathname.endsWith('/manifest.json'));
-  if(!isStatic)return;
-  e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request)));
+const CACHE='grandprix360-v53-clean';
+const CORE=[
+  'assets/app.css?v=11.0.0',
+  'assets/premium.css?v=11.0.0',
+  'assets/v72-admin.css?v=11.0.0',
+  'assets/finance-users-v8.css?v=28.0.0',
+  'assets/v29-mobile.css?v=31.0.0',
+  'assets/v30-finance-analytics.css?v=31.0.0',
+  'assets/v31-payments.css?v=33.0.0',
+  'assets/grandprix-ui-v35.css?v=35.1.0',
+  'assets/grandprix-ui-v36.css?v=36.0.0',
+  'assets/grandprix360-mobile-tablet-v53-clean.css?v=53.0.0',
+  'assets/grandprix360-mobile-tablet-v53-clean.js?v=53.0.0',
+  'assets/grandprix-symbol.png',
+  'assets/grandprix-logo-light.png',
+  'manifest.json'
+];
+self.addEventListener('install',event=>{
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).catch(()=>{}));
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(k=>k!==CACHE && /^grandprix/i.test(k)).map(k=>caches.delete(k)));
+    await self.clients.claim();
+  })());
+});
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET') return;
+  const url=new URL(event.request.url);
+  if(url.origin!==self.location.origin) return;
+  const staticAsset=url.pathname.includes('/assets/') || url.pathname.endsWith('/manifest.json');
+  if(!staticAsset) return;
+  event.respondWith((async()=>{
+    try{
+      const response=await fetch(event.request,{cache:'no-store'});
+      if(response && response.ok){
+        const copy=response.clone();
+        caches.open(CACHE).then(cache=>cache.put(event.request,copy)).catch(()=>{});
+      }
+      return response;
+    }catch(_){
+      return (await caches.match(event.request)) || Response.error();
+    }
+  })());
 });

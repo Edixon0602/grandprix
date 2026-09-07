@@ -1,0 +1,9 @@
+GRANDPRIX · REDISEÑO V41 · RECONSTRUCCIÓN DE INTERFAZ
+
+Esta versión corrige la causa real detectada en producción: Apache no estaba sirviendo correctamente los archivos NUEVOS de CSS/logo.
+
+V41 NO depende de grandprix-final.css ni de logos nuevos para el panel. El CSS principal y el logo están embebidos dentro de index.php, un archivo que el servidor ya ejecuta correctamente.
+
+Reemplazar en la raíz del dashboard y extraer aceptando reemplazo. No ejecutar /install/.
+
+Archivos lógicos/backend NO modificados: api/, lib/, config/, base de datos, Traccar/webhook/comandos.

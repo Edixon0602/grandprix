@@ -1,0 +1,53 @@
+GRANDPRIX PWA V42 · ADMIN + CLIENTE
+=====================================
+
+Actualización directa. NO requiere /install ni cambios de base de datos.
+
+Incluye dos PWA independientes:
+1) GRANDPRIX Administración
+   - manifest.json
+   - sw.js
+   - assets/pwa-admin-*.png
+   - opción visual “Instalar panel GRANDPRIX”
+
+2) Mi GRANDPRIX / Portal del Cliente
+   - cliente/manifest.json
+   - cliente/sw.js
+   - cliente/assets/pwa-client-*.png
+   - opción visual “Instalar Mi GRANDPRIX”
+
+Archivos PHP actualizados:
+- index.php
+- login.php
+- monitor.php
+- cliente/index.php
+- cliente/login.php
+
+Nuevos recursos:
+- assets/pwa-install.css
+- assets/pwa-install.js
+- assets/pwa-admin-180.png
+- assets/pwa-admin-192.png
+- assets/pwa-admin-512.png
+- assets/pwa-admin-maskable-512.png
+- offline.html
+- cliente/assets/pwa-install.css
+- cliente/assets/pwa-install.js
+- cliente/assets/pwa-client-180.png
+- cliente/assets/pwa-client-192.png
+- cliente/assets/pwa-client-512.png
+- cliente/assets/pwa-client-maskable-512.png
+- cliente/offline.html
+
+INSTALACIÓN
+-----------
+Extraer en la raíz del dashboard aceptando reemplazar. No abrir ningún instalador.
+El sitio debe estar servido por HTTPS para que el navegador permita instalar una PWA.
+
+COMPORTAMIENTO
+--------------
+- Chrome/Edge/Android: cuando el navegador emite beforeinstallprompt, aparece una tarjeta “Instalar”.
+- iPhone/iPad: se muestra la instrucción Compartir → Añadir a pantalla de inicio.
+- Si ya está abierta como aplicación instalada, la tarjeta no aparece.
+- Los Service Workers Admin y Cliente usan cachés independientes y ya no se borran entre sí.
+- No se cachean API, pagos, datos de clientes ni HTML autenticado. Solo recursos estáticos; sin conexión se muestra una pantalla neutra.

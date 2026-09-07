@@ -1,0 +1,27 @@
+GRANDPRIX V36 · INTERFAZ FIEL A LA PROPUESTA APROBADA
+
+ACTUALIZACION DIRECTA: NO USA /install/ Y NO MODIFICA LA BASE DE DATOS.
+
+Extraer este ZIP en la raiz de dashboard.grandprixvzla.com, donde estan index.php, assets/, cliente/ y monitor.php.
+Aceptar reemplazar archivos.
+
+Archivos actualizados:
+- index.php
+- monitor.php (solo presentacion visual)
+- login.php
+- sw.js
+- assets/grandprix-ui-v36.css
+- assets/grandprix-logo-light.png
+- assets/grandprix-logo-dark.png
+- assets/grandprix-symbol.png
+- assets/grandprix-icon-512.png
+- cliente/index.php
+- cliente/login.php
+- cliente/sw.js
+- cliente/assets/grandprix-ui-v36.css
+
+El logo principal queda incrustado dentro del HTML como respaldo, por lo que el sidebar y login no dependen de que Apache pueda servir el PNG por una ruta externa.
+
+No toca FinanceService, PaymentReceiptService, BcvRateService, Traccar, webhook, comandos GPS, base de datos ni APIs financieras.
+
+Despues de extraer: abrir dashboard.grandprixvzla.com y hacer Ctrl+F5 una vez. En movil, cerrar/reabrir la PWA o recargar.

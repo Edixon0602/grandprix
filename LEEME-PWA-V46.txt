@@ -1,0 +1,11 @@
+GRANDPRIX PWA V46 - INSTALACION DIRECTA EN ANDROID CHROME
+
+- GRANDPRIX 360 y GRANDPRIX CLIENTE son PWA independientes.
+- El banner de instalación SOLO aparece en móvil cuando Chrome confirma que la app es instalable (beforeinstallprompt).
+- Por esa razón, si el botón Instalar está visible, al tocarlo abre directamente el diálogo nativo de instalación.
+- Se eliminó el fallback “Ver cómo” en Android.
+- El logo del banner está embebido en SVG y no depende de archivos externos.
+- Los iconos del manifest se ubican en rutas simples de la raíz para reducir problemas de permisos/rutas.
+- En iPhone/iPad Safari no existe una API web que permita abrir automáticamente la instalación; Safari exige Compartir > Añadir a pantalla de inicio. Por ello V46 no muestra un botón falso de instalación directa en iOS.
+
+No requiere /install/. Extraer en la raíz del dashboard y reemplazar.

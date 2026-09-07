@@ -38,6 +38,9 @@ final class CustomerPortal
             return null;
         }
         $this->pdo->prepare('UPDATE gp_customers SET last_login_at = NOW() WHERE id = ?')->execute([(int) $customer['id']]);
+        // Desde V53, una autenticación válida queda asociada a la versión vigente.
+        // Al cambiar gp_release(), las sesiones anteriores se invalidan automáticamente.
+        $_SESSION['grandprix_session_release'] = gp_release();
         unset($customer['password_hash']);
         return $customer;
     }

@@ -1,0 +1,106 @@
+/* GRANDPRIX 360 · Fase 3 pantalla por pantalla */
+@media (max-width:1024px){
+  body.gp50-phase3{
+    --gp50-ink:#102b46;
+    --gp50-sub:#6f89a4;
+    --gp50-line:#e5edf5;
+    --gp50-soft:#f6faff;
+    --gp50-blue:#2563ff;
+    --gp50-cyan:#22c6f3;
+    --gp50-navy:#0b1d33;
+    --gp50-orange:#ffb020;
+  }
+
+  body.gp50-phase3 .gp50-shortcuts{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 14px!important;
+  }
+  body.gp50-phase3 .gp50-shortcuts button{
+    border:1px solid var(--gp50-line)!important;background:#fff!important;border-radius:18px!important;padding:12px 8px!important;
+    box-shadow:0 12px 24px rgba(16,43,70,.06)!important;color:var(--gp50-ink)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:74px!important;
+  }
+  body.gp50-phase3 .gp50-shortcuts button i{
+    width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#eff5ff,#ebfbff);display:grid;place-items:center;color:#1d58ef;font-size:16px!important;
+  }
+  body.gp50-phase3 .gp50-shortcuts button span{font-size:11px!important;font-weight:800!important;line-height:1.2!important;text-align:center!important}
+
+  /* Account / client cards */
+  body.gp50-phase3 .gp50-account-cards{display:grid!important;gap:14px!important;padding:0 14px 18px!important}
+  body.gp50-phase3 .gp50-account-card{
+    border:1px solid var(--gp50-line)!important;border-radius:24px!important;background:#fff!important;box-shadow:0 18px 38px rgba(12,38,67,.065)!important;padding:16px!important;
+  }
+  body.gp50-phase3 .gp50-card-head{display:flex!important;justify-content:space-between!important;align-items:flex-start!important;gap:12px!important;margin-bottom:12px!important}
+  body.gp50-phase3 .gp50-card-head .who{display:flex!important;gap:12px!important;align-items:flex-start!important;min-width:0}
+  body.gp50-phase3 .gp50-avatar{
+    width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#0b1d33,#2258f3);color:#fff;font-weight:800;display:grid;place-items:center;flex:0 0 48px;font-size:15px;
+  }
+  body.gp50-phase3 .gp50-card-head b{display:block;font-size:18px!important;color:var(--gp50-ink)!important;line-height:1.12!important}
+  body.gp50-phase3 .gp50-card-head small{display:block;margin-top:4px!important;font-size:12px!important;color:var(--gp50-sub)!important;line-height:1.35!important}
+  body.gp50-phase3 .gp50-moto-thumb{
+    width:72px;height:56px;border-radius:16px;background:linear-gradient(180deg,#f8fbff,#eef5fb);border:1px solid #eaf0f7;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 72px;
+  }
+  body.gp50-phase3 .gp50-moto-thumb img{max-width:100%;max-height:100%;object-fit:contain}
+  body.gp50-phase3 .gp50-meta-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin:10px 0 14px!important}
+  body.gp50-phase3 .gp50-meta-grid article{padding:12px!important;border-radius:16px!important;background:var(--gp50-soft)!important;border:1px solid #ebf1f7!important}
+  body.gp50-phase3 .gp50-meta-grid article small{display:block;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.06em!important;color:var(--gp50-sub)!important;font-weight:800!important}
+  body.gp50-phase3 .gp50-meta-grid article b{display:block;margin-top:4px!important;font-size:13px!important;color:#173550!important;line-height:1.35!important}
+  body.gp50-phase3 .gp50-progress{display:flex!important;align-items:center!important;gap:10px!important;margin-bottom:12px!important}
+  body.gp50-phase3 .gp50-progress .bar{flex:1;height:10px;background:#edf3f8;border-radius:999px;overflow:hidden}
+  body.gp50-phase3 .gp50-progress .bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#31c48d,#35d0f6)}
+  body.gp50-phase3 .gp50-progress b{font-size:12px!important;color:#173550!important;white-space:nowrap}
+  body.gp50-phase3 .gp50-card-foot{display:flex!important;justify-content:space-between!important;gap:10px!important;align-items:center!important;flex-wrap:wrap!important}
+  body.gp50-phase3 .gp50-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important}
+  body.gp50-phase3 .gp50-actions button{min-height:42px!important;border-radius:14px!important;padding:0 14px!important}
+
+  body.gp50-phase3 .gp50-hide-original-mobile{display:none!important}
+
+  /* Audit cards */
+  body.gp50-phase3 .gp50-audit-cards{display:grid!important;gap:14px!important;padding:0 14px 18px!important}
+  body.gp50-phase3 .gp50-audit-card{background:#fff!important;border:1px solid var(--gp50-line)!important;border-radius:22px!important;padding:16px!important;box-shadow:0 16px 34px rgba(12,38,67,.06)!important}
+  body.gp50-phase3 .gp50-audit-card .top{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin-bottom:10px!important}
+  body.gp50-phase3 .gp50-audit-card .top b{font-size:16px!important;color:var(--gp50-ink)!important;line-height:1.2!important}
+  body.gp50-phase3 .gp50-audit-card .top small{display:block;margin-top:4px!important;font-size:11px!important;color:var(--gp50-sub)!important}
+  body.gp50-phase3 .gp50-audit-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+  body.gp50-phase3 .gp50-audit-grid article{padding:11px 12px!important;border-radius:15px!important;background:var(--gp50-soft)!important;border:1px solid #ebf1f7!important}
+  body.gp50-phase3 .gp50-audit-grid article small{display:block;font-size:10px!important;color:var(--gp50-sub)!important;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+  body.gp50-phase3 .gp50-audit-grid article b{display:block;margin-top:4px!important;font-size:12px!important;color:#173550!important;line-height:1.35!important}
+  body.gp50-phase3 .gp50-audit-note{margin-top:10px!important;padding:12px!important;border-radius:15px!important;background:#f8fbfe!important;border:1px solid #ebf1f7!important;font-size:12px!important;color:#4f6782!important;line-height:1.5!important}
+
+  /* GPS monitor touch polish */
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-hero{
+    position:relative;margin:0 0 12px!important;border-radius:26px;padding:18px 16px!important;background:linear-gradient(135deg,#071b32 0%,#0d2f56 52%,#173f6e 100%)!important;color:#fff!important;overflow:hidden;box-shadow:0 18px 42px rgba(10,32,56,.16)!important;
+  }
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-hero:after{
+    content:"";position:absolute;right:-30px;top:-20px;width:170px;height:170px;background:radial-gradient(circle,rgba(69,205,255,.26) 0%,rgba(69,205,255,0) 72%);
+  }
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-hero h3{margin:8px 0 4px!important;font-size:28px!important;color:#fff!important;letter-spacing:-.05em!important}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-hero p{margin:0!important;color:#dceafb!important;font-size:13px!important;line-height:1.45!important;max-width:520px!important}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px!important;margin-top:14px!important}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis article{background:rgba(255,255,255,.12)!important;border:1px solid rgba(255,255,255,.16)!important;border-radius:16px!important;padding:12px!important}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis small{display:block;font-size:10px!important;text-transform:uppercase!important;letter-spacing:.06em!important;opacity:.8}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis b{display:block;margin-top:5px!important;font-size:22px!important;line-height:1!important}
+  body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis span{display:block;margin-top:4px!important;font-size:11px!important;color:#dceafb!important}
+
+  body.workspace-monitor.gp50-phase3 .map-panel,
+  body.workspace-monitor.gp50-phase3 .panel,
+  body.workspace-monitor.gp50-phase3 .workspace-panel{border-radius:22px!important}
+
+  /* Dossier modal improvement mobile */
+  body.gp50-phase3 #v8Modal.show .v25-dossier-modal{padding:0!important;max-width:100%!important;width:100%!important;height:100%!important;border-radius:0!important}
+  body.gp50-phase3 .v25-dossier-header{padding:18px!important;gap:14px!important}
+  body.gp50-phase3 .v25-dossier-tabs{padding:0 14px 14px!important;overflow:auto!important;gap:8px!important}
+  body.gp50-phase3 .v25-dossier-tabs button{white-space:nowrap!important;border-radius:999px!important;padding:10px 14px!important}
+  body.gp50-phase3 #v25DossierContent{padding:0 14px 22px!important}
+
+  /* Reports & alerts */
+  body.gp50-phase3 .v8-report-grid{display:grid!important;gap:14px!important}
+  body.gp50-phase3 .v8-report-grid .panel,
+  body.gp50-phase3 .v18-notification-grid button,
+  body.gp50-phase3 .v10-collection-card{border-radius:24px!important;box-shadow:0 16px 34px rgba(12,38,67,.06)!important}
+
+  @media (min-width:768px){
+    body.gp50-phase3 .gp50-account-cards{grid-template-columns:1fr 1fr!important}
+    body.gp50-phase3 .gp50-audit-cards{grid-template-columns:1fr 1fr!important}
+    body.gp50-phase3 .gp50-shortcuts{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+    body.workspace-monitor.gp50-phase3 .gp50-monitor-kpis{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+  }
+}

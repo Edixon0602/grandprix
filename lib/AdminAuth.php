@@ -81,6 +81,7 @@ final class AdminAuth
         $_SESSION['grandprix_admin_email'] = (string) ($profile['email'] ?? '');
         $_SESSION['grandprix_admin_role'] = (string) ($profile['role'] ?? 'Administrador');
         $_SESSION['grandprix_admin_permissions'] = array_values(array_unique(array_map('strval', (array) ($profile['permissions'] ?? []))));
+        $_SESSION['grandprix_session_release'] = gp_release();
     }
 
     public static function overview(): array

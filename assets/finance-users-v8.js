@@ -80,10 +80,10 @@ function statusInfo(account){
   return map[account.status]||['En revisión','gray','fa-circle-info'];
 }
 function financeShell(title,sub,body=''){
-  return `<div class="page v8-page"><section class="v8-hero"><div><span class="v8-eyebrow"><i class="fa-solid fa-chart-line"></i> DATOS REALES · BASE FINANCIERA</span><h2>${safe(title)}</h2><p>${safe(sub)}</p></div><div class="v8-hero-actions"><button onclick="gpFinanceRefresh()"><i class="fa-solid fa-rotate"></i> Actualizar</button>${can('finance.reports.export')?'<button onclick="gpFinanceExport()"><i class="fa-solid fa-file-csv"></i> Exportar cartera</button>':''}</div></section>${body||'<div id="v8FinanceRoot">'+loading()+'</div>'}</div>`;
+  return `<div class="page v8-page gp-module-page"><section class="gp-module-toolbar"><div><span class="gp-module-kicker"><i class="fa-solid fa-chart-line"></i> GRANDPRIX · OPERACIÓN REAL</span><h2>${safe(title)}</h2><p>${safe(sub)}</p></div><div class="gp-module-actions"><button onclick="gpFinanceRefresh()"><i class="fa-solid fa-rotate"></i> Actualizar</button>${can('finance.reports.export')?'<button class="primary" onclick="gpFinanceExport()"><i class="fa-solid fa-file-csv"></i> Exportar</button>':''}</div></section>${body||'<div id="v8FinanceRoot">'+loading()+'</div>'}</div>`;
 }
 
-views.resumen=()=>can('dashboard.view')?(can('finance.view')?financeShell('Resumen ejecutivo','Cartera importada desde Para Cargar la data.xlsx. Sin cifras demo.','<div id="v8FinanceRoot">'+loading('Preparando resumen ejecutivo')+'</div>'):`<div class="page v8-page"><section class="v8-hero"><div><span class="v8-eyebrow"><i class="fa-solid fa-shield-halved"></i> GRANDPRIX CONTROL 360</span><h2>Bienvenido, ${safe(admin.name||'usuario')}</h2><p>Tu acceso está limitado a los módulos autorizados para el rol ${safe(admin.role||'asignado')}.</p></div></section><div class="v8-state"><i class="fa-solid fa-user-shield"></i><b>Acceso por responsabilidades activo</b><small>Usa el menú para abrir únicamente las herramientas habilitadas.</small></div></div>`):denied();
+views.resumen=()=>can('dashboard.view')?(can('finance.view')?`<div class="page v8-page gp-dashboard-page"><div id="v8FinanceRoot">${loading('Preparando Dashboard')}</div></div>`:`<div class="page v8-page"><section class="v8-hero"><div><span class="v8-eyebrow"><i class="fa-solid fa-shield-halved"></i> GRANDPRIX CONTROL 360</span><h2>Bienvenido, ${safe(admin.name||'usuario')}</h2><p>Tu acceso está limitado a los módulos autorizados para el rol ${safe(admin.role||'asignado')}.</p></div></section><div class="v8-state"><i class="fa-solid fa-user-shield"></i><b>Acceso por responsabilidades activo</b><small>Usa el menú para abrir únicamente las herramientas habilitadas.</small></div></div>`):denied();
 views.analitica=()=>can('finance.view')?financeShell('Analítica de cartera','Desempeño por referente, morosidad y concentración de riesgo.','<div id="v8FinanceRoot">'+loading('Calculando indicadores')+'</div>'):denied();
 views.centroalertas=()=>can('finance.view')?`<div class="page v8-page"><section class="v8-hero v18-alert-hero"><div><span class="v8-eyebrow"><i class="fa-solid fa-bell"></i> CONTROL PREVENTIVO</span><h2>Centro de alertas y notificaciones</h2><p>Prioriza clientes en mora, casos críticos, pagos por conciliar y próximos vencimientos de los miércoles.</p></div><button onclick="gpAlertsRefresh()"><i class="fa-solid fa-rotate"></i> Actualizar</button></section><div id="v18AlertsRoot">${loading('Calculando alertas financieras')}</div></div>`:denied();
 if(cfg.area!=='monitor')views.motos=()=>canOpen('motos')?`<div class="page v8-page v25-expediente-page"><div id="v8FinanceRoot">${loading('Cargando Expediente 360')}</div></div>`:denied();
@@ -283,11 +283,56 @@ window.gpPaymentAnalyticsPreset=value=>{state.paymentAnalyticsFilter.preset=Stri
 window.gpPaymentAnalyticsApply=()=>{const from=q('#v30AnalyticsFrom')?.value||'',to=q('#v30AnalyticsTo')?.value||'';if(!from||!to){toast('Selecciona la fecha inicial y final.','error');return}state.paymentAnalyticsFilter={preset:'custom',from,to};v30LoadPaymentAnalytics();};
 window.gpPaymentAnalyticsReload=()=>v30LoadPaymentAnalytics();
 
-function renderDashboard(){
-  const root=q('#v8FinanceRoot'),d=state.finance,m=d.metrics;
-  const critical=(d.accounts||[]).filter(a=>a.status==='critical').sort((a,b)=>b.late-a.late).slice(0,8);
-  root.innerHTML=`${metricCards(m,true)}${v30PaymentAnalyticsPanel(false)}<div class="v8-grid-2"><section class="panel v8-panel"><div class="v8-panel-head"><div><h2>Distribución de mora</h2><p>Clasificación exacta de la hoja cargada</p></div></div><div class="v8-risk-strip"><button><b>${num(m.late_x1)}</b><span>x1 en mora</span></button><button><b>${num(m.late_x2)}</b><span>x2 en mora</span></button><button class="critical"><b>${num(m.recovery_cases)}</b><span>Recuperar · &gt;2</span></button><button class="recovered"><b>${num(m.recovered_accounts)}</b><span>Recuperadas</span></button></div></section><section class="panel v8-panel"><div class="v8-panel-head"><div><h2>Asignación GPS administrativa</h2><p>Solo relación cliente ↔ Device ID; no altera telemetría</p></div></div><div class="v8-gps-progress"><div><strong>${num(m.gps_assigned)}</strong><span>con GPS asignado</span></div><div class="v8-progress"><i style="width:${Math.min(100,(Number(m.gps_assigned||0)/Math.max(1,Number(m.total_records||1)))*100)}%"></i></div><small>${num(Number(m.total_records||0)-Number(m.gps_assigned||0))} pendientes de asignación</small></div></section></div><div class="v8-grid-2"><section class="panel v8-panel"><div class="v8-panel-head"><div><h2>Casos prioritarios</h2><p>Mayor número de cuotas vencidas</p></div><button onclick="navigate('cobranza')">Abrir cobranza</button></div>${accountMiniRows(critical)}</section><section class="panel v8-panel"><div class="v8-panel-head"><div><h2>Referentes</h2><p>Calle, al día y morosidad</p></div><button onclick="navigate('analitica')">Ver análisis</button></div>${referrerCompact(d.referrers)}</section></div>`;
+function gpDashboardWeekStrip(account,payments){
+  if(!account)return '<div class="gp-week-empty"><i class="fa-solid fa-calendar-days"></i><span>Configura un cliente para visualizar su cronograma semanal.</span></div>';
+  const paid=Math.max(0,Number(account.paid||0)),total=Math.max(1,Number(account.totalInstallments||50));
+  const related=(payments||[]).filter(p=>Number(p.account_id||p.accountId||0)===Number(account.id)&&String(p.status||'')==='confirmed');
+  let partialWeek=0,partialPct=0;
+  for(const p of related){const dist=v31PaymentDistribution(p);if(dist.partial.length){partialWeek=Number(dist.partial[0]||0);break}}
+  const start=Math.max(1,Math.min(Math.max(1,total-7),paid>3?paid-3:1));
+  const weeks=[];for(let w=start;w<=Math.min(total,start+7);w++){let cls='pending',label='Pendiente';if(w<=paid){cls='paid';label='Pagada'}else if(w===partialWeek){cls='partial';label='Abono'}weeks.push(`<button type="button" class="gp-week ${cls}" onclick="gpAccountStatement(${Number(account.id)})"><small>Sem ${w}</small><span><i class="fa-solid ${cls==='paid'?'fa-check':cls==='partial'?'fa-circle-half-stroke':'fa-minus'}"></i></span><b>${label}</b></button>`)}
+  return `<div class="gp-week-head"><div><small>Cliente de referencia</small><b>${safe(account.fullName)}</b></div><div><small>Cuota semanal</small><b>${account.weeklyAmount!=null?money(account.weeklyAmount):'Sin configurar'}</b></div></div><div class="gp-week-strip">${weeks.join('')}</div><div class="gp-week-legend"><span class="paid"><i></i> Pagada</span><span class="partial"><i></i> Abono parcial</span><span class="pending"><i></i> Pendiente</span></div>`;
 }
+function renderDashboard(){
+  const root=q('#v8FinanceRoot'),d=state.finance,m=d.metrics||{},accounts=d.accounts||[],payments=d.payments||[];
+  const analytics=state.paymentAnalytics||d.paymentAnalytics||{metrics:{}},am=analytics.metrics||{};
+  const active=accounts.filter(a=>Number(a.paid||0)<Number(a.totalInstallments||50));
+  const latestPartial=payments.find(p=>String(p.status||'')==='confirmed'&&Number(p.partial_allocations||0)>0);
+  const focus=accounts.find(a=>Number(a.id)===Number(latestPartial?.account_id||latestPartial?.accountId||0))||active.find(a=>Number(a.late||0)>0)||active[0]||accounts[0]||null;
+  const critical=accounts.filter(a=>a.status==='critical').sort((a,b)=>Number(b.late||0)-Number(a.late||0));
+  const review=payments.filter(p=>String(p.status||'')==='review').length;
+  const financed=accounts.reduce((t,a)=>t+Number(a.financedAmount||0),0),weekly=active.reduce((t,a)=>t+Number(a.weeklyAmount||0),0);
+  const currentPct=Math.round((Number(m.current_accounts||0)/Math.max(1,Number(m.active_accounts||0)))*100);
+  const alerts=[
+    ['bad','fa-triangle-exclamation',`${num(m.recovery_cases||0)} créditos en mora alta`,'Más de 2 cuotas vencidas','clientes'],
+    ['warn','fa-clock',`${num(m.late_installments||0)} cuotas vencidas`,'Requieren seguimiento','clientes'],
+    ['blue','fa-money-check-dollar',`${num(review)} pagos por conciliar`,'Revisión pendiente','pagos'],
+    ['info','fa-satellite-dish',`${num(Math.max(0,Number(m.total_records||0)-Number(m.gps_assigned||0)))} clientes sin GPS`,'Asignación administrativa','clientes']
+  ];
+  root.innerHTML=`
+    ${metricCards(m,true)}
+    <section class="gp-dashboard-main-grid">
+      <article class="panel gp-dashboard-card gp-collections-card">
+        <div class="gp-card-title"><div><h2>Cobranzas</h2><p>${safe(analytics.label||'Este mes')}</p></div><button onclick="navigate('pagos')">Ver movimientos</button></div>
+        <div class="gp-collections-body"><div class="gp-money-stack"><span><small>Divisas reportadas</small><b>${money(am.reportedUsd||0)}</b><em>${num(am.completedInstallments||0)} cuotas completadas</em></span><span><small>Bolívares reportados</small><b>${bsMoney(am.reportedBs||0)}</b><em>${num(am.partialAllocations||0)} abonos parciales</em></span></div><div class="gp-collection-ring" style="--p:${Math.max(0,Math.min(100,currentPct))}"><span><b>${currentPct}%</b><small>al día</small></span></div></div>
+        <div class="gp-ten-summary"><div><small>10% del total del mes</small><b>${money(am.tenPercentUsd||0)}</b></div><div><small>10% en bolívares</small><b>${bsMoney(am.tenPercentBs||0)}</b></div></div>
+      </article>
+      <article class="panel gp-dashboard-card gp-weekly-card">
+        <div class="gp-card-title"><div><h2>Cuota semanal</h2><p>Progreso real del financiamiento</p></div><button onclick="${focus?`gpAccountStatement(${Number(focus.id)})`:`navigate('clientes')`}">Ver calendario</button></div>
+        ${gpDashboardWeekStrip(focus,payments)}
+      </article>
+      <article class="panel gp-dashboard-card gp-alert-card">
+        <div class="gp-card-title"><div><h2>Alertas</h2><p>Prioridades de la operación</p></div><button onclick="navigate('centroalertas')">Ver todas</button></div>
+        <div class="gp-alert-list">${alerts.map(x=>`<button onclick="navigate('${x[4]}')"><i class="${x[0]} fa-solid ${x[1]}"></i><span><b>${safe(x[2])}</b><small>${safe(x[3])}</small></span><i class="fa-solid fa-chevron-right"></i></button>`).join('')}</div>
+      </article>
+    </section>
+    <section class="gp-dashboard-lower-grid">
+      <article class="panel gp-compact-panel"><div class="gp-card-title"><div><h2>Resumen ejecutivo</h2><p>Indicadores principales</p></div><button onclick="navigate('analitica')">Ver análisis</button></div><div class="gp-executive-rows"><span><small>Monto financiado</small><b>${money(financed)}</b></span><span><small>Cobranza semanal esperada</small><b>${money(weekly)}</b></span><span><small>Cartera en mora</small><b>${num(m.late_accounts||0)} clientes</b></span><span><small>GPS asignados</small><b>${num(m.gps_assigned||0)} / ${num(m.total_records||0)}</b></span></div></article>
+      <article class="panel gp-compact-panel"><div class="gp-card-title"><div><h2>Clientes y créditos</h2><p>Estado de la cartera</p></div><button onclick="navigate('clientes')">Ver todos</button></div><div class="gp-executive-rows"><span><small>Clientes activos</small><b>${num(m.active_accounts||0)}</b></span><span><small>Al día</small><b>${num(m.current_accounts||0)}</b></span><span><small>En mora</small><b>${num(m.late_accounts||0)}</b></span><span><small>Completados</small><b>${num(m.completed_accounts||0)}</b></span></div></article>
+      <article class="panel gp-compact-panel"><div class="gp-card-title"><div><h2>Conciliación</h2><p>${safe(analytics.label||'Período actual')}</p></div><button onclick="navigate('pagos')">Ir a pagos</button></div><div class="gp-reconcile-summary"><span><small>Pagos reportados</small><b>${num(am.reportedPayments||0)}</b></span><span class="good"><small>Conciliados</small><b>${num(am.confirmedPayments||0)}</b></span><span class="warn"><small>Por conciliar</small><b>${num(am.reviewPayments||0)}</b></span></div><button class="gp-primary-wide" onclick="gpPaymentNew()"><i class="fa-solid fa-plus"></i> Registrar pago / abono</button></article>
+    </section>`;
+}
+
 function accountMiniRows(list){
   if(!list.length)return '<div class="v8-empty">Sin casos críticos.</div>';
   return `<div class="v8-mini-list">${list.map(a=>`<button onclick="gpAccountStatement(${a.id})"><span class="v8-avatar">${safe(initials(a.fullName))}</span><span><b>${safe(a.fullName)}</b><small>${safe(a.model||'Sin modelo')} · ${safe(a.plate||'Sin placa')}</small></span><em>${a.late} cuotas</em></button>`).join('')}</div>`;

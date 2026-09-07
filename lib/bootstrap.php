@@ -6,7 +6,7 @@ date_default_timezone_set('America/Caracas');
 
 function gp_release(): string
 {
-    return '22.1.2';
+    return '23.0.0';
 }
 
 /*
@@ -39,17 +39,42 @@ if (!function_exists('mb_substr')) {
 
 function gp_start_session(): void
 {
-    if (session_status() === PHP_SESSION_ACTIVE) return;
-    $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
-    session_name('grandprix360');
-    session_set_cookie_params([
-        'lifetime' => 0,
-        'path' => '/',
-        'secure' => $secure,
-        'httponly' => true,
-        'samesite' => 'Strict',
-    ]);
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+        session_name('grandprix360');
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path' => '/',
+            'secure' => $secure,
+            'httponly' => true,
+            'samesite' => 'Strict',
+        ]);
+        session_start();
+    }
+    gp_enforce_release_session();
+}
+
+/**
+ * Fuerza un nuevo inicio de sesión cuando cambia la versión de GRANDPRIX.
+ * Esto evita que una sesión abierta conserve HTML/CSS/JS anteriores después
+ * de una actualización y garantiza que el usuario vuelva a entrar con la
+ * versión vigente. Aplica tanto a administradores como a clientes.
+ */
+function gp_enforce_release_session(): void
+{
+    if (session_status() !== PHP_SESSION_ACTIVE) return;
+
+    $authenticated = !empty($_SESSION['grandprix_admin']) || !empty($_SESSION['grandprix_customer_id']);
+    if (!$authenticated) return;
+
+    $current = gp_release();
+    $sessionRelease = (string) ($_SESSION['grandprix_session_release'] ?? '');
+    if ($sessionRelease === $current) return;
+
+    $_SESSION = [];
+    session_regenerate_id(true);
+    $_SESSION['grandprix_session_release'] = $current;
+    $_SESSION['grandprix_version_logout'] = true;
 }
 
 function gp_app_config(): array

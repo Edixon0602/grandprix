@@ -1,0 +1,94 @@
+/* GRANDPRIX 360 · Phase 2 móvil/tablet refinado */
+@media (max-width:1024px){
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero{
+    position:relative;overflow:hidden;border-radius:30px;padding:20px 18px 18px!important;
+    margin:6px 0 14px!important;background:linear-gradient(135deg,#071b32 0%,#0d2f56 50%,#153d6a 100%)!important;color:#fff!important;
+    box-shadow:0 22px 52px rgba(9,28,50,.18)!important;isolation:isolate;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero:before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(7,27,50,.78) 0%,rgba(7,27,50,.46) 45%,rgba(7,27,50,.10) 72%),url('road-dashboard-bg.jpg') center/cover no-repeat;
+    z-index:-1;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero .gp49-kicker{
+    display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero h3{
+    margin:10px 0 6px!important;font-size:30px!important;line-height:1.02!important;letter-spacing:-.05em!important;color:#fff!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero p{
+    margin:0!important;font-size:13px!important;line-height:1.45!important;color:#dcebfb!important;max-width:520px!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats article{
+    padding:12px 13px;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(8px);
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats small{display:block;font-size:10px!important;opacity:.78!important;text-transform:uppercase;letter-spacing:.05em}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats b{display:block;margin-top:3px;font-size:25px!important;line-height:1!important;letter-spacing:-.05em!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats span{display:block;margin-top:5px;font-size:11px!important;color:#d9e8f8!important}
+
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-section-title{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 2px 12px!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-section-title b{font-size:18px!important;color:#102b46!important;letter-spacing:-.03em}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-section-title span{font-size:11px!important;color:#6f89a4!important;font-weight:700!important;text-transform:uppercase;letter-spacing:.06em}
+
+  /* Cards for payments / movements */
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-cards{display:grid!important;gap:14px!important;padding:0 14px 16px!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-card{
+    background:#fff!important;border:1px solid #e7edf4!important;border-radius:24px!important;padding:16px!important;
+    box-shadow:0 16px 34px rgba(10,38,68,.065)!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-top{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin-bottom:12px!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-top b{display:block;font-size:18px!important;color:#102b46!important;line-height:1.1!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-top small{display:block;font-size:12px!important;color:#6f89a4!important;line-height:1.4!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-money{text-align:right!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-money strong{display:block;font-size:28px!important;color:#0f2c49!important;letter-spacing:-.05em!important;line-height:1!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-money em{display:block;font-style:normal!important;font-size:11px!important;color:#6f89a4!important;font-weight:800!important;letter-spacing:.05em!important;text-transform:uppercase}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-meta{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin:12px 0!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-meta article{padding:12px!important;border-radius:16px!important;background:#f8fbfe!important;border:1px solid #e7eef5!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-meta article small{display:block;font-size:10px!important;color:#6f89a4!important;text-transform:uppercase;letter-spacing:.06em;font-weight:800!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-meta article b{display:block;margin-top:4px;font-size:13px!important;color:#173550!important;line-height:1.35!important;word-break:break-word}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-status{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:12px!important;flex-wrap:wrap!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist{display:grid!important;gap:8px!important;margin-top:10px!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist .v31-payment-dist,
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist .v31-payment-distribution{display:grid!important;gap:8px!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist .v31-payment-pill,
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist .v31-dist-pill,
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-dist span{
+    display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:10px 12px!important;border-radius:15px!important;font-size:12px!important;font-weight:700!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-card .v8-pill{font-size:11px!important;padding:8px 10px!important;border-radius:999px!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-actions button{
+    width:44px!important;height:44px!important;border-radius:14px!important;border:1px solid #dce7f2!important;background:#fff!important;color:#173550!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-actions button.primary{background:linear-gradient(135deg,#2260ff,#21bdf1)!important;color:#fff!important;border:0!important}
+  body.gp48-mobile-tablet.gp49-phase2 .gp49-hide-table-mobile{display:none!important}
+
+  /* Polishing existing dashboard and analytics blocks more closely */
+  body.gp48-mobile-tablet.gp49-phase2 .v30-analytics-panel,
+  body.gp48-mobile-tablet.gp49-phase2 .v25-exec-panel,
+  body.gp48-mobile-tablet.gp49-phase2 .v8-panel{
+    overflow:hidden!important;
+  }
+  body.gp48-mobile-tablet.gp49-phase2 .v25-summary > article,
+  body.gp48-mobile-tablet.gp49-phase2 .v30-analytics-kpis > article,
+  body.gp48-mobile-tablet.gp49-phase2 .v8-kpi{
+    background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%)!important;
+  }
+
+  /* Tablet adjustments */
+  @media (min-width:768px){
+    body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero{padding:22px 20px 20px!important}
+    body.gp48-mobile-tablet.gp49-phase2 .gp49-page-hero h3{font-size:34px!important}
+    body.gp48-mobile-tablet.gp49-phase2 .gp49-hero-stats{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+    body.gp48-mobile-tablet.gp49-phase2 .gp49-payment-cards{grid-template-columns:1fr 1fr!important}
+    body.gp48-mobile-tablet.gp49-phase2 .gp48-actions{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+    body.gp48-mobile-tablet.gp49-phase2 .v25-exec-list{grid-template-columns:1fr 1fr!important}
+  }
+}

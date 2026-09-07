@@ -1,0 +1,45 @@
+GRANDPRIX · REDISEÑO TOTAL DEL PANEL
+===================================
+
+BASE: _srv.zip entregado por el usuario (producción actual).
+NO REQUIERE /install/ NI CAMBIOS DE BASE DE DATOS.
+
+INSTALACIÓN
+1. Hacer respaldo de la raíz actual de dashboard.grandprixvzla.com.
+2. Subir este ZIP a la raíz donde están index.php, assets/, api/, lib/, cliente/.
+3. Extraer aceptando reemplazar archivos.
+4. Abrir https://dashboard.grandprixvzla.com/index.php
+5. Hacer Ctrl + F5 una sola vez.
+
+CAMBIO VISUAL
+- Nuevo layout base; no se carga grandprix-ui-v35.css ni grandprix-ui-v36.css.
+- Sidebar reconstruido y reducido a los módulos de uso real.
+- Header reconstruido sin logo embebido gigante.
+- Dashboard reconstruido con la composición de la referencia aprobada.
+- Tarjetas KPI, cobranzas, cuota semanal, alertas, resumen, clientes y conciliación.
+- Diseño común nuevo para clientes, pagos, expediente, inventario, solicitudes,
+  recibos, usuarios, alertas, tablas, filtros, formularios y modales.
+- Responsive móvil real con navegación inferior.
+- Logo GRANDPRIX cargado desde archivos locales.
+
+NO SE MODIFICA
+- API financiera.
+- Base de datos.
+- FinanceService / PaymentReceiptService.
+- Lógica USD / Bs / Euro BCV.
+- Conciliación y abonos.
+- Traccar, webhook, realtime ni comandos GPS.
+
+ARCHIVOS ACTUALIZADOS
+index.php
+login.php
+sw.js
+assets/app.js
+assets/finance-users-v8.js
+assets/grandprix-final.css
+assets/grandprix-login-final.css
+assets/grandprix-logo-light.png
+assets/grandprix-logo-dark.png
+assets/grandprix-logo-light.svg
+assets/grandprix-logo-dark.svg
+assets/grandprix-symbol.png

@@ -1,0 +1,44 @@
+GRANDPRIX V35.1 · INTERFAZ DIRECTA SIN INSTALL
+================================================
+
+OBJETIVO
+--------
+Esta actualización NO usa /install/ ni requiere ejecutar ningún PHP de instalación.
+No modifica la base de datos.
+
+INSTALACIÓN
+-----------
+1. Haz respaldo de los archivos actuales.
+2. Sube este ZIP a la RAÍZ del panel administrativo (la misma carpeta donde están index.php, assets/, cliente/, monitor.php).
+3. Extrae y acepta reemplazar los archivos existentes.
+4. Entra a https://dashboard.grandprixvzla.com/ y haz Ctrl + F5 una vez.
+5. En móvil/PWA, cierra y vuelve a abrir la app; el Service Worker cambia a V35.1.
+
+IMPORTANTE
+----------
+- No debes abrir ninguna URL /install/.
+- No hay migraciones SQL.
+- La interfaz entra en funcionamiento inmediatamente al reemplazar los archivos.
+- Se sustituyeron referencias SVG del logo por PNG para evitar problemas de lectura/MIME/permisos en algunos servidores.
+- Se conserva la línea gráfica: #0B1D33, #2563FF, #FFFFFF, #F2F4F7 y #FF8A00.
+- No se altera la lógica de Traccar, webhook, comandos GPS o realtime; monitor.php solo recibe la presentación visual.
+
+ARCHIVOS PRINCIPALES
+--------------------
+index.php
+login.php
+monitor.php
+manifest.json
+sw.js
+assets/app.js
+assets/grandprix-ui-v35.css
+assets/grandprix-auth-v35.css
+assets/grandprix-logo-light.png
+assets/grandprix-logo-dark.png
+assets/grandprix-symbol.png
+assets/grandprix-icon-512.png
+cliente/index.php
+cliente/login.php
+cliente/manifest.json
+cliente/sw.js
+cliente/assets/grandprix-ui-v35.css

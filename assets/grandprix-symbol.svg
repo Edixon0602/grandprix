@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="GRANDPRIX">
+  <defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C58D8"/><stop offset="1" stop-color="#56A4FF"/></linearGradient></defs>
+  <rect width="128" height="128" rx="30" fill="#071D35"/>
+  <path fill="#fff" d="M18 27h63c8 0 14 7 12 15l-4 13H52l-4 13h29l-4 13H43c-15 0-23-13-19-27l4-13c4-9 12-14 23-14H18z"/>
+  <path fill="url(#b)" d="M67 27h42l-8 29H83l-5 17H61l6-46z"/>
+  <path fill="url(#b)" d="M91 61h18l-8 28H83l8-28z"/>
+  <path fill="#F28A23" d="M22 88h13l-4 13H18z"/>
+</svg>

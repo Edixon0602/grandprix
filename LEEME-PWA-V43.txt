@@ -1,0 +1,40 @@
+GRANDPRIX PWA V43
+=================
+
+Nombres finales:
+- Panel administrativo: GRANDPRIX 360
+- Portal del cliente: GRANDPRIX CLIENTE
+
+Ambas aplicaciones usan el nuevo símbolo oficial GRANDPRIX como icono.
+
+Comportamiento de instalación:
+- El aviso de instalación SOLO se crea en dispositivos móviles.
+- En escritorio no se muestra.
+- Si la PWA está abierta en modo standalone, no se muestra.
+- En Chrome/Android, al tocar Instalar se usa el prompt nativo cuando está disponible.
+- Cuando Chrome confirma la instalación, se guarda una marca local y el aviso deja de mostrarse en ese navegador.
+- En iPhone/iPad Safari, Apple no permite lanzar la instalación con un prompt web; el botón muestra Compartir → Añadir a pantalla de inicio y luego permite marcar “Ya la instalé”.
+- Si el usuario cierra el aviso sin instalar, solo se oculta durante esa sesión y vuelve a estar disponible en una visita futura.
+
+IMPORTANTE:
+No requiere /install/. Subir a la raíz de dashboard.grandprixvzla.com y reemplazar los archivos incluidos.
+
+Archivos principales:
+manifest.json
+sw.js
+offline.html
+assets/pwa-install.js
+assets/pwa-install.css
+assets/pwa-admin-*.png
+index.php
+login.php
+monitor.php
+
+cliente/manifest.json
+cliente/sw.js
+cliente/offline.html
+cliente/assets/pwa-install.js
+cliente/assets/pwa-install.css
+cliente/assets/pwa-client-*.png
+cliente/index.php
+cliente/login.php

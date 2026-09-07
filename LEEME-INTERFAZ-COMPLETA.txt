@@ -1,0 +1,33 @@
+GRANDPRIX · PAQUETE COMPLETO DE INTERFAZ
+========================================
+Base revisada: _srv.zip (producción, 02/09/2026)
+
+Este paquete sustituye la entrega incompleta anterior.
+Incluye la estructura completa necesaria para el panel visual:
+- index.php
+- login.php
+- monitor.php (solo interfaz, no lógica GPS)
+- logout.php
+- manifest.json
+- sw.js
+- assets/ completo (CSS, JS, logos, motos, MapLibre/Pusher, inventario)
+- cliente/ completo (portal, login, PWA y assets)
+- public/ completo (sitio público y sus assets, conservando la lógica actual)
+
+NO incluye ni reemplaza:
+- config/
+- .env
+- api/
+- lib/
+- base de datos / SQL
+- install/
+
+INSTALACIÓN
+1. Hacer respaldo del servidor.
+2. Subir este ZIP a la raíz de dashboard.grandprixvzla.com.
+3. Extraer y aceptar reemplazo.
+4. Ctrl+F5 en escritorio; cerrar/reabrir PWA en móvil si aplica.
+
+IMPORTANTE
+No se requiere ejecutar /install/.
+No modifica lógica financiera, conciliación, BCV, Traccar, webhook ni comandos.
