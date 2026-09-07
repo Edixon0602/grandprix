@@ -6,6 +6,7 @@ require_once dirname(__DIR__) . '/lib/TraccarClient.php';
 require_once dirname(__DIR__) . '/lib/TelemetryStore.php';
 require_once dirname(__DIR__) . '/lib/RealtimePublisher.php';
 
+gp_start_session();
 
 $configPath = dirname(__DIR__) . '/config/traccar.php';
 $config = gp_traccar_config();
@@ -17,7 +18,13 @@ $rootPath = rtrim(str_replace('\\', '/', dirname(dirname((string) ($_SERVER['SCR
 $webhookUrl = $scheme . '://' . (string) ($_SERVER['HTTP_HOST'] ?? 'grandprixvzla.com') . $rootPath . '/api/traccar-webhook.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!gp_verify_csrf($_POST['csrf'] ?? null)) {
+    $csrf = (string) ($_POST['csrf'] ?? '');
+    $sameOrigin = !empty($_SERVER['HTTP_ORIGIN']) && (
+        str_contains($_SERVER['HTTP_ORIGIN'], 'grandprixvzla.com') ||
+        str_contains($_SERVER['HTTP_ORIGIN'], 'localhost') ||
+        str_contains($_SERVER['HTTP_ORIGIN'], '127.0.0.1')
+    );
+    if (!gp_verify_csrf($csrf) && !$sameOrigin) {
         $error = 'La sesión de seguridad venció. Recarga la página.';
     } else {
         $baseUrl = rtrim(trim((string) ($_POST['base_url'] ?? '')), '/');

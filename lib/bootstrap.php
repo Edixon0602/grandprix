@@ -40,14 +40,16 @@ if (!function_exists('mb_substr')) {
 function gp_start_session(): void
 {
     if (session_status() !== PHP_SESSION_ACTIVE) {
-        $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+        $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https')
+            || (($_SERVER['HTTP_X_FORWARDED_SSL'] ?? '') === 'on');
         session_name('grandprix360');
         session_set_cookie_params([
             'lifetime' => 0,
             'path' => '/',
             'secure' => $secure,
             'httponly' => true,
-            'samesite' => 'Strict',
+            'samesite' => 'Lax',
         ]);
         session_start();
     }
