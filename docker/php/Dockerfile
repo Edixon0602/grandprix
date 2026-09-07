@@ -31,3 +31,9 @@ RUN { \
 } > /usr/local/etc/php/conf.d/grandprix.ini
 
 WORKDIR /var/www/html
+
+# Script de arranque para asegurar permisos de carpetas de escritura compartidas
+COPY docker/php/entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

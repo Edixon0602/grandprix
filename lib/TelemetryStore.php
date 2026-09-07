@@ -253,11 +253,12 @@ final class TelemetryStore
             if (is_string($temporary) && is_file($temporary)) @unlink($temporary);
             throw new RuntimeException('No se pudo guardar la telemetria.');
         }
-        @chmod($temporary, 0640);
+        @chmod($temporary, 0666);
         if (!@rename($temporary, $this->statePath)) {
             @unlink($temporary);
             throw new RuntimeException('No se pudo publicar la telemetria guardada.');
         }
+        @chmod($this->statePath, 0666);
     }
 
     private function isNewerPosition(array $incoming, ?array $current): bool
@@ -289,17 +290,28 @@ final class TelemetryStore
 
     private function ensureDirectory(): void
     {
-        if (!is_dir($this->directory) && !@mkdir($this->directory, 0750, true) && !is_dir($this->directory)) {
-            throw new RuntimeException('No se pudo crear config/runtime.');
+        if (!is_dir($this->directory)) {
+            if (!@mkdir($this->directory, 0777, true) && !is_dir($this->directory)) {
+                throw new RuntimeException('No se pudo crear config/runtime.');
+            }
+            @chmod($this->directory, 0777);
+        } elseif (!is_writable($this->directory)) {
+            @chmod($this->directory, 0777);
         }
     }
 
     /** @return resource */
     private function openLock()
     {
+        if (is_file($this->lockPath) && !is_writable($this->lockPath)) {
+            @chmod($this->lockPath, 0666);
+        }
         $lock = @fopen($this->lockPath, 'c+');
-        if ($lock === false) throw new RuntimeException('No se pudo abrir el bloqueo de telemetria.');
-        @chmod($this->lockPath, 0640);
+        if ($lock === false) {
+            $status = !is_dir($this->directory) ? 'no existe' : (!is_writable($this->directory) ? 'sin permisos de escritura' : 'error de apertura');
+            throw new RuntimeException("No se pudo abrir el bloqueo de telemetria ({$this->lockPath}). Directorio runtime: {$status}.");
+        }
+        @chmod($this->lockPath, 0666);
         return $lock;
     }
 }
