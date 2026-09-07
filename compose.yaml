@@ -89,6 +89,7 @@ services:
       DB_USERNAME: ${DB_USER:-u843703195_grandprix}
       DB_PASSWORD: ${DB_PASSWORD:-Victormanuel44}
       TZ: ${TZ:-America/Caracas}
+      TRACCAR_BASE_URL: ${TRACCAR_BASE_URL:-https://traccar.grandprixvzla.com}
     volumes:
       - .:/var/www/html
     labels:

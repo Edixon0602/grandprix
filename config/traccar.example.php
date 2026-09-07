@@ -4,7 +4,7 @@
 return [
     'enabled' => true,
     'production_mode' => true,
-    'base_url' => 'https://traccar.nevox.pro',
+    'base_url' => 'https://traccar.grandprixvzla.com',
     'token' => 'PEGAR_TOKEN_NUEVO_AQUI',
     'token_expires_at' => null,
     'auth_mode' => 'bearer',

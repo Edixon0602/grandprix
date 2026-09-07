@@ -14,15 +14,33 @@ flowchart LR
 
 | Parámetro | Valor operativo |
 |---|---|
-| Servidor | `https://traccar.nevox.pro` |
-| Autenticación | Query string `?token=` |
+| Servidor | `https://traccar.grandprixvzla.com` |
+| Autenticación | Bearer token / Query string `?token=` |
 | Intervalo | 5 segundos |
 | Entorno | Producción obligatorio |
 | Comandos | Compatibilidad dinámica por Device ID |
 | Portal cliente | Sólo la unidad asignada por el servidor |
 | Contingencia | Diagnóstico visible, sin datos simulados |
 
-El token ya está en `config/traccar.php` y registra vencimiento el **31 de agosto de 2026 a las 04:00 UTC**. Reemplázalo antes de esa fecha desde `install/conectar-traccar.php`.
+## Generación Dinámica de Tokens API (Traccar)
+
+Grandprix permite generar y renovar tokens de API programáticamente solicitando el endpoint nativo de Traccar:
+
+* **Endpoint:** `POST /api/session/token`
+* **Autenticación:** HTTP Basic Auth (`usuario:contraseña`).
+* **Payload:** Formulario `application/x-www-form-urlencoded` con `expiration` en formato **ISO-8601** (ej. `2027-09-07T00:00:00Z`).
+* **Respuesta:** Token en texto plano.
+
+### Métodos de Generación:
+1. **Vía Interfaz Web:** Abre `https://dashboard.grandprixvzla.com/install/conectar-traccar.php`, selecciona *"Generar automáticamente por API"*, introduce tus credenciales de Traccar y elige la vigencia deseada.
+2. **Vía CLI / Cron:** Ejecuta en la terminal del servidor:
+   ```bash
+   php tools/traccar-token.php --generate --user=admin@grandprixvzla.com --password=Secret --days=365
+   ```
+   Para comprobar la vigencia:
+   ```bash
+   php tools/traccar-token.php --check
+   ```
 
 ## Endpoints internos
 

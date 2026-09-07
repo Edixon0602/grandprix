@@ -81,4 +81,86 @@ final class TraccarClient
             throw new RuntimeException('Traccar devolvió una respuesta no válida.');
         }
     }
+
+    /**
+     * Genera un token API dinámico en Traccar solicitando POST /api/session/token
+     * mediante HTTP Basic Auth (usuario y contraseña) y el parámetro expiration en formato ISO-8601.
+     * Devuelve el token en texto plano.
+     */
+    public static function requestApiToken(
+        string $baseUrl,
+        string $username,
+        string $password,
+        string $expirationIso8601
+    ): string {
+        $base = rtrim(trim($baseUrl), '/');
+        if (!preg_match('~^https://[a-z0-9.-]+(?::\d+)?(?:/.*)?$~i', $base)) {
+            throw new RuntimeException('La URL de Traccar debe usar HTTPS.');
+        }
+        $apiBase = str_ends_with($base, '/api') ? $base : $base . '/api';
+        $url = $apiBase . '/session/token';
+
+        if (trim($username) === '' || trim($password) === '') {
+            throw new InvalidArgumentException('Debes indicar el usuario y la contraseña de Traccar.');
+        }
+
+        // Validar formato de la fecha de expiración
+        $timestamp = strtotime($expirationIso8601);
+        if ($timestamp === false || $timestamp <= time()) {
+            throw new InvalidArgumentException('La fecha de expiración debe ser una fecha futura válida en formato ISO-8601.');
+        }
+
+        if (!function_exists('curl_init')) {
+            throw new RuntimeException('El servidor necesita la extensión PHP cURL para conectar con Traccar.');
+        }
+
+        $postFields = http_build_query(['expiration' => $expirationIso8601]);
+
+        $curl = curl_init($url);
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postFields,
+            CURLOPT_USERPWD => $username . ':' . $password,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/x-www-form-urlencoded',
+                'Accept: text/plain, application/json, */*',
+            ],
+            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_TIMEOUT => 20,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+            CURLOPT_USERAGENT => 'GRANDPRIX-Control-360/' . (function_exists('gp_release') ? gp_release() : '1.0'),
+        ]);
+
+        $raw = curl_exec($curl);
+        $status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        $error = curl_error($curl);
+        curl_close($curl);
+
+        if ($raw === false) {
+            throw new RuntimeException('No fue posible contactar el servidor Traccar para generar el token: ' . $error);
+        }
+
+        if ($status === 401 || $status === 403) {
+            throw new RuntimeException('Credenciales incorrectas en Traccar. Verifica el usuario y la contraseña.');
+        }
+
+        if ($status < 200 || $status >= 300) {
+            $detail = trim(strip_tags((string) $raw));
+            throw new RuntimeException('Traccar respondió HTTP ' . $status . ($detail ? ': ' . mb_substr($detail, 0, 240) : ' al generar el token.'));
+        }
+
+        $token = trim((string) $raw);
+        if (str_starts_with($token, '"') && str_ends_with($token, '"')) {
+            $token = trim($token, '"');
+        }
+
+        if ($token === '') {
+            throw new RuntimeException('Traccar respondió con un token vacío.');
+        }
+
+        return $token;
+    }
 }

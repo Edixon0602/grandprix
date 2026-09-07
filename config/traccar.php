@@ -3,7 +3,7 @@
 return array (
   'enabled' => true,
   'production_mode' => true,
-  'base_url' => 'https://traccar.nevox.pro',
+  'base_url' => 'https://traccar.grandprixvzla.com',
   'token' => 'RzBFAiB1fiXBj_8Tqq1BhZC9sVRFr_KeiXUDZ8AnKrkZLKpTTAIhALa-KWwcqo_9-9ThBl16W3wazraEaPj8L1Tzren0FBWxeyJpIjozMTE5NTEwMDM4NzU2NDE1NzgzLCJ1IjoxLCJlIjoiMjAyNi0wOC0zMVQwNDowMDowMC4wMDArMDA6MDAifQ',
   'token_expires_at' => '2026-08-31T04:00:00+00:00',
   'auth_mode' => 'bearer',

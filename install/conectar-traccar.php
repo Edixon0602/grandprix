@@ -21,7 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'La sesión de seguridad venció. Recarga la página.';
     } else {
         $baseUrl = rtrim(trim((string) ($_POST['base_url'] ?? '')), '/');
+        $tokenMode = trim((string) ($_POST['token_mode'] ?? 'auto'));
+        $traccarUser = trim((string) ($_POST['traccar_user'] ?? ''));
+        $traccarPassword = (string) ($_POST['traccar_password'] ?? '');
+        $tokenDurationDays = filter_var($_POST['token_duration_days'] ?? 365, FILTER_VALIDATE_INT) ?: 365;
+
         $newToken = trim((string) ($_POST['token'] ?? ''));
+        $tokenExpiresAt = $config['token_expires_at'] ?? null;
+        $tokenGeneratedNote = '';
+
+        if ($tokenMode === 'auto' && $traccarUser !== '' && $traccarPassword !== '') {
+            $expirationIso = gmdate('Y-m-d\TH:i:s\Z', strtotime("+{$tokenDurationDays} days"));
+            $newToken = TraccarClient::requestApiToken($baseUrl, $traccarUser, $traccarPassword, $expirationIso);
+            $tokenExpiresAt = $expirationIso;
+            $tokenGeneratedNote = ' Se generó dinámicamente un nuevo Token API con vigencia hasta ' . date('d/m/Y H:i', strtotime($expirationIso)) . ' UTC.';
+        }
+
         $token = $newToken !== '' ? $newToken : (string) ($config['token'] ?? '');
         $authMode = in_array(($_POST['auth_mode'] ?? ''), ['query', 'bearer'], true) ? (string) $_POST['auth_mode'] : 'bearer';
         $newMaptilerKey = trim((string) ($_POST['maptiler_key'] ?? ''));
@@ -39,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'production_mode' => true,
             'base_url' => $baseUrl,
             'token' => $token,
-            'token_expires_at' => $newToken === '' ? ($config['token_expires_at'] ?? null) : null,
+            'token_expires_at' => $newToken !== '' ? $tokenExpiresAt : ($config['token_expires_at'] ?? null),
             'auth_mode' => $authMode,
             'webhook_enabled' => true,
             'webhook_secret' => $webhookSecret,
@@ -114,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             @chmod($configPath, 0640);
             $config = $candidate;
-            $message = 'Conexión verificada. Se guardó el catálogo de ' . count($devices) . ' dispositivo(s), el webhook quedó activo y no existe polling.'
+            $message = 'Conexión verificada.' . $tokenGeneratedNote . ' Se guardó el catálogo de ' . count($devices) . ' dispositivo(s), el webhook quedó activo y no existe polling.'
                 . ($candidate['realtime_enabled'] ? ' El canal WebSocket privado también fue validado.' : ' Falta activar Pusher para movimiento instantáneo en pantallas abiertas.');
         } catch (Throwable $exception) {
             $error = $exception->getMessage();
@@ -161,8 +176,48 @@ try {
 <?php if ($error): ?><div class="err"><i class="fa-solid fa-triangle-exclamation"></i> <?=htmlspecialchars($error)?></div><?php endif; ?>
 <input type="hidden" name="csrf" value="<?=htmlspecialchars(gp_csrf_token())?>">
 <div class="fields">
-<label class="full">URL del servidor<input name="base_url" type="url" required value="<?=htmlspecialchars((string) $config['base_url'])?>" placeholder="https://traccar.nevox.pro"></label>
-<label class="full">Token de acceso<input name="token" type="password" placeholder="Déjalo vacío para conservar el token incluido"><small style="display:block;color:#718399;margin-top:6px"><?=$masked?> · vence: <?=htmlspecialchars($expiry)?></small></label>
+<label class="full">URL del servidor<input name="base_url" type="url" required value="<?=htmlspecialchars((string) $config['base_url'])?>" placeholder="https://traccar.grandprixvzla.com"></label>
+
+<div class="full" style="padding:14px;border:1px solid #cbdffa;background:#f3f8ff;border-radius:14px">
+<span class="eyebrow">OBTENCIÓN DEL TOKEN DE API</span>
+<p style="margin:7px 0 10px;color:#42677a;font-size:12px;line-height:1.4">Puedes generar un token nuevo automáticamente mediante la API de Traccar o ingresar un token manual.</p>
+<div style="display:flex;gap:20px;flex-wrap:wrap">
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700">
+    <input type="radio" name="token_mode" value="auto" checked onchange="toggleTokenMode(this.value)" style="width:auto;margin:0">
+    <span>Generar automáticamente por API (Recomendado)</span>
+  </label>
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700">
+    <input type="radio" name="token_mode" value="manual" onchange="toggleTokenMode(this.value)" style="width:auto;margin:0">
+    <span>Ingresar token manual preexistente</span>
+  </label>
+</div>
+</div>
+
+<div id="section-token-auto" class="full" style="display:grid;grid-template-columns:1fr 1fr;gap:13px;background:#f7fafd;padding:15px;border-radius:14px;border:1px dashed #bcd3ec">
+<label>Usuario / Email de Traccar
+  <input name="traccar_user" type="text" placeholder="admin@grandprixvzla.com" autocomplete="username">
+  <small style="display:block;color:#718399;margin-top:4px">Autenticación Basic Auth directa a /api/session/token. No se almacena en disco.</small>
+</label>
+<label>Contraseña de Traccar
+  <input name="traccar_password" type="password" placeholder="Contraseña de la cuenta Traccar" autocomplete="current-password">
+  <small style="display:block;color:#718399;margin-top:4px">Solo se usa en esta llamada para recibir el token en texto plano.</small>
+</label>
+<label class="full">Vigencia del nuevo token
+  <select name="token_duration_days">
+    <option value="90">3 meses (90 días)</option>
+    <option value="180">6 meses (180 días)</option>
+    <option value="365" selected>1 año (365 días) · Recomendado</option>
+    <option value="730">2 años (730 días)</option>
+  </select>
+</label>
+</div>
+
+<div id="section-token-manual" class="full" style="display:none">
+<label class="full">Token de acceso manual
+  <input name="token" type="password" placeholder="Déjalo vacío para conservar el token incluido">
+  <small style="display:block;color:#718399;margin-top:6px"><?=$masked?> · vence: <?=htmlspecialchars($expiry)?></small>
+</label>
+</div>
 <label>Método de autenticación<select name="auth_mode"><option value="bearer" <?=($config['auth_mode'] ?? 'bearer') === 'bearer' ? 'selected' : ''?>>Bearer token (recomendado)</option><option value="query" <?=($config['auth_mode'] ?? '') === 'query' ? 'selected' : ''?>>Query param ?token=</option></select></label>
 <label>Entrega de telemetría<input value="Webhook + WebSocket · sin polling" readonly></label>
 <div class="full" style="padding:14px;border:1px solid #bde9df;background:#edfbf7;border-radius:14px"><span class="eyebrow">WEBHOOK DE TRACCAR</span><p style="margin:7px 0 0;color:#42677a;font-size:12px;line-height:1.5">Traccar enviará cada posición y evento al sistema. El navegador no realizará consultas repetitivas.</p></div>
@@ -196,4 +251,13 @@ try {
 <div class="note"><i class="fa-solid fa-code"></i> Configura en Traccar <b>forward.type=json</b>, <b>forward.url</b>, <b>event.forward.type=json</b>, <b>event.forward.url</b> y la cabecera secreta mostrada en este formulario.</div>
 <div class="note"><i class="fa-solid fa-key"></i> La credencial fue compartida por mensajería. Para la operación definitiva conviene revocarla y generar una nueva desde Traccar después de esta presentación.</div>
 <?php if ($devices): ?><div class="devices"><b>Dispositivos detectados</b><?php foreach ($devices as $device): ?><div class="device"><b>ID <?=htmlspecialchars((string) ($device['id'] ?? ''))?> · <?=htmlspecialchars((string) ($device['name'] ?? 'Sin nombre'))?></b><span>Identificador: <?=htmlspecialchars((string) ($device['uniqueId'] ?? ''))?> · <?=htmlspecialchars((string) ($device['status'] ?? 'unknown'))?></span></div><?php endforeach; ?></div><?php endif; ?>
-</aside></div></div></body></html>
+</aside></div></div>
+<script>
+function toggleTokenMode(mode) {
+  var autoSec = document.getElementById('section-token-auto');
+  var manualSec = document.getElementById('section-token-manual');
+  if (autoSec) autoSec.style.display = (mode === 'auto' ? 'grid' : 'none');
+  if (manualSec) manualSec.style.display = (mode === 'manual' ? 'block' : 'none');
+}
+</script>
+</body></html>

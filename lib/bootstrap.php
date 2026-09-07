@@ -86,10 +86,12 @@ function gp_app_config(): array
 function gp_traccar_config(): array
 {
     $path = dirname(__DIR__) . '/config/traccar.php';
+    $envBase = getenv('TRACCAR_BASE_URL') ?: ($_ENV['TRACCAR_BASE_URL'] ?? '');
+    $defaultBase = $envBase !== '' ? rtrim($envBase, '/') : 'https://traccar.grandprixvzla.com';
     $defaults = [
         'enabled' => true,
         'production_mode' => true,
-        'base_url' => 'https://traccar.nevox.pro',
+        'base_url' => $defaultBase,
         'token' => '',
         'auth_mode' => 'bearer',
         'webhook_enabled' => true,
@@ -112,7 +114,11 @@ function gp_traccar_config(): array
         'customer_device_match' => '',
         'customer_devices' => [],
     ];
-    return file_exists($path) ? array_replace($defaults, (array) require $path) : $defaults;
+    $cfg = file_exists($path) ? array_replace($defaults, (array) require $path) : $defaults;
+    if ($envBase !== '') {
+        $cfg['base_url'] = rtrim($envBase, '/');
+    }
+    return $cfg;
 }
 
 function gp_is_admin(): bool
