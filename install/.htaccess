@@ -1,0 +1,2 @@
+# Evitar listado de directorio en la carpeta install
+Options -Indexes

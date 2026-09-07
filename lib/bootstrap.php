@@ -301,3 +301,29 @@ function gp_runtime_error(string $channel, Throwable $error, array $context = []
     }
     return $reference;
 }
+
+/**
+ * Protege de forma global cualquier recurso dentro de /install/ una vez que
+ * la plataforma ha sido instalada (existencia de install.lock).
+ * Exige sesión de administrador activa para entrar o redirige a login.php.
+ */
+function gp_enforce_install_protection(): void
+{
+    if (PHP_SAPI === 'cli') {
+        return;
+    }
+
+    $script = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+    if (!str_contains($script, '/install/')) {
+        return;
+    }
+
+    $lock = dirname(__DIR__) . '/config/install.lock';
+    if (!file_exists($lock)) {
+        return; // Permite la instalación inicial si aún no se ha completado
+    }
+
+    gp_require_admin(false);
+}
+
+gp_enforce_install_protection();

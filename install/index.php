@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once dirname(__DIR__) . '/lib/bootstrap.php';
 $root = dirname(__DIR__);
 $configDir = $root . '/config';
 $lock = $configDir . '/install.lock';
