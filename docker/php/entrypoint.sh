@@ -24,4 +24,8 @@ touch /var/www/html/config/traccar-audit.log 2>/dev/null || true
 chown www-data:www-data /var/www/html/config/traccar.php /var/www/html/config/traccar-audit.log 2>/dev/null || true
 chmod 666 /var/www/html/config/traccar.php /var/www/html/config/traccar-audit.log 2>/dev/null || true
 
+# Garantizar permisos de lectura para archivos estáticos
+chmod -R 755 /var/www/html/assets /var/www/html/public/assets 2>/dev/null || true
+find /var/www/html/assets /var/www/html/public/assets -type f -exec chmod 644 {} + 2>/dev/null || true
+
 exec apache2-foreground "$@"
